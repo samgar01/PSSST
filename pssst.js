@@ -13,8 +13,7 @@ var Q = window.Q = Quintus()
 	Q.scene("level1",function(stage) {
 		Q.stageTMX("level.tmx",stage);
 
-		stage.add("viewport")
-			.follow(player);
+		stage.add("viewport");
 	});
 
 	Q.scene('mainTitle',function(stage) {
@@ -22,8 +21,7 @@ var Q = window.Q = Quintus()
 	    x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
 	  }));
 
-	  var button = box.insert(new Q.UI.Button({ x: 0, y: 0,
-	                                           asset: "mainTitle.png" }));
+	  var button = box.insert(new Q.UI.Button({ x: -1, y: 0, asset: "maintitle.png", scale: 0.73 }));
 
 	  Q.input.keyboardControls({
 			ENTER: "start"
