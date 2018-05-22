@@ -12,6 +12,7 @@ var Q = window.Q = Quintus()
 
 	Q.scene("level1",function(stage) {
 		Q.stageTMX("level.tmx",stage);
+		var manolo = stage.insert(new Q.Manolo({ x: 230, y: 230})); 
 
 		stage.add("viewport");
 	});
@@ -39,6 +40,38 @@ var Q = window.Q = Quintus()
 	  box.fit(20);
 	});
 
+
+	/*--------------------------------- MANOLO -----------------------------------------*/
+
+	Q.Sprite.extend("Manolo",{
+		// the init constructor is called on creation
+		init: function(p) {
+			// You can call the parent's constructor with this._super(..)
+			this._super(p, {
+				sheet: "manoloU",
+				sprite: "manolo",
+				frame: 0,					//inicializamos a mario
+
+			});	
+
+			// Add in pre-made components to get up and running quickly
+			// The `2d` component adds in default 2d collision detection
+			// and kinetics (velocity, gravity)
+			// The `platformerControls` makes the player controllable by the
+			// default input actions (left, right to move, up or action to jump)
+			// It also checks to make sure the player is on a horizontal surface before
+			// letting them jump.
+			this.add('2d, platformerControls, animation, tween');
+			// Write event handlers to respond hook into behaviors.
+			// hit.sprite is called everytime the player collides with a sprite
+		}
+			
+	});
+
+
+
+
+
 	/*---------------------------------FIN DEL JUEGO-----------------------------------*/
 	Q.scene('endGame',function(stage) {
 	  var box = stage.insert(new Q.UI.Container({
@@ -51,7 +84,7 @@ var Q = window.Q = Quintus()
 	                                        label: stage.options.label }));
 	  button.on("click",function() {
 	    Q.clearStages();
-	    Q.stageScene('mainTitle');
+	    Q.stageScene('maintitle');
 	  });
 	  box.fit(20);
 	});
@@ -69,7 +102,7 @@ var Q = window.Q = Quintus()
 	                                        label: stage.options.label }));
 	  button.on("click",function() {
 	    Q.clearStages();
-	    Q.stageScene('mainTitle');
+	    Q.stageScene('maintitle');
 	  });
 	  box.fit(20);
 	});
@@ -79,8 +112,9 @@ var Q = window.Q = Quintus()
 		Q.stageScene("mainTitle");
 	});
 
-	Q.load("", function() {
+	Q.load(["manolo.png","manolo.json"], function() {
 		// Finally, call stageScene to run the game
+		Q.compileSheets("manolo.png","manolo.json"); 
 		Q.stageScene("mainTitle");
 	});
 
