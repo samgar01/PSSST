@@ -5,10 +5,13 @@
   <image source="../images/muro-parte.png" width="109" height="52"/>
  </tileset>
  <tileset firstgid="4" source="muro-verticalA.tsx"/>
- <imagelayer name="background" offsetx="0" offsety="31">
-  <image source="../images/maintitle.png" width="442" height="307"/>
+ <imagelayer name="background" offsetx="-1" offsety="-1">
+  <image source="../images/bg.png" width="800" height="600"/>
  </imagelayer>
- <layer name="Capa de patrones 1" width="60" height="18" offsetx="-3" offsety="29">
+ <layer name="Collision" width="60" height="18">
+  <properties>
+   <property name="collision" value="true"/>
+  </properties>
   <data>
    <tile/>
    <tile/>
