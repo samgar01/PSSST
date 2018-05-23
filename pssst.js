@@ -10,7 +10,7 @@ var Q = window.Q = Quintus()
 	// And turn on default input controls and touch input (for UI)
 	.controls().touch();
 
-	Q.scene("level1",function(stage) {
+	Q.scene('level1',function(stage) {
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({ x: 230, y: 230})); 
 
@@ -61,11 +61,62 @@ var Q = window.Q = Quintus()
 			// default input actions (left, right to move, up or action to jump)
 			// It also checks to make sure the player is on a horizontal surface before
 			// letting them jump.
-			this.add('2d, platformerControls, animation, tween');
+			this.add('2d, platformerControls, animation');
 			// Write event handlers to respond hook into behaviors.
 			// hit.sprite is called everytime the player collides with a sprite
 		}
 			
+	});
+
+ /* ---------------------------- GusanoAzul --------------------------------- */
+
+	Q.Sprite.extend("GusanoAzul", {
+		init: function(p) {
+			this._super(p, {
+				sheet: "gusanoazulU",
+				sprite: "gusanoazul",
+				frame: 0,
+			});
+
+			this.add('2d, aiBounce, animation, defaultEnemy');
+			this.on("gusanoazulD", "dead");
+			
+		},
+
+		step: function(p) {
+			
+		} 	
+	});
+
+	Q.animations('gusanoazul', {
+		//move: { frames: [1,0], rate: 1/2}, 
+		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
+	});
+
+
+ /* ---------------------------- GusanoVerde --------------------------------- */
+
+	Q.Sprite.extend("GusanoVerde", {
+		init: function(p) {
+			this._super(p, {
+				sheet: "gusanoverdeU",
+				sprite: "gusanoverde",
+				frame: 0,
+			});
+
+			this.add('2d, aiBounce, animation, defaultEnemy');
+			this.on("gusanoverdeD", "dead");
+
+		},
+
+		step: function(p) {
+			
+		} 	
+	});
+
+	Q.animations('gusanoverde', {
+		//move: { frames: [1,0], rate: 1/2}, 
+		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
 	});
 
 
@@ -84,7 +135,7 @@ var Q = window.Q = Quintus()
 	                                        label: stage.options.label }));
 	  button.on("click",function() {
 	    Q.clearStages();
-	    Q.stageScene('maintitle');
+	    Q.stageScene('mainTitle');
 	  });
 	  box.fit(20);
 	});
@@ -102,7 +153,7 @@ var Q = window.Q = Quintus()
 	                                        label: stage.options.label }));
 	  button.on("click",function() {
 	    Q.clearStages();
-	    Q.stageScene('maintitle');
+	    Q.stageScene('mainTitle');
 	  });
 	  box.fit(20);
 	});
@@ -112,10 +163,12 @@ var Q = window.Q = Quintus()
 		Q.stageScene("mainTitle");
 	});
 
-	Q.load(["manolo.png","manolo.json"], function() {
+	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","manolo.json","maintitle.png"], function() {
 		// Finally, call stageScene to run the game
 		Q.compileSheets("manolo.png","manolo.json"); 
-		Q.stageScene("mainTitle");
+		Q.compileSheets("GusanoAzul.png","GusanoAzul.json"); 
+		Q.compileSheets("GusanoVerde.png","GusanoVerde.json"); 
+		Q.sheet("mainTitle","maintitle.png");
 	});
 
 
