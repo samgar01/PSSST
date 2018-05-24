@@ -4,14 +4,14 @@ var game = function() {
 // includes the `TileLayer` class as well as the `2d` componet.
 var Q = window.Q = Quintus()
 	.include("Audio, Sprites, Scenes, Input, Touch, UI, Anim, TMX, 2D")
-	.setup({width: 320, // Set the default width to 320 pixels
-			height: 480, // Set the default height to 480 pixels
+	.setup({width: 510, // Set the default width to 320 pixels
+			height: 510, // Set the default height to 480 pixels
 			})
 	// And turn on default input controls and touch input (for UI)
 	.controls(true).touch();
 
-	Q.scene('level1',function(stage) {
-		//Q.stageTMX("level.tmx",stage);//DESCOMENTAR
+	Q.scene("level1",function(stage) {
+		Q.stageTMX("level.tmx",stage);//DESCOMENTAR
 		var manolo = stage.insert(new Q.Manolo());
 
 		stage.add("viewport");
@@ -22,7 +22,7 @@ var Q = window.Q = Quintus()
 	    x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
 	  }));
 
-	  var button = box.insert(new Q.UI.Button({ x: -1, y: 0, asset: "maintitle.png", scale: 0.73 }));
+	  var button = box.insert(new Q.UI.Button({ x: -1, y: 0, asset: "maintitle.png", scale: 1.18 }));
 
 	  Q.input.keyboardControls({
 			ENTER: "start"
@@ -30,7 +30,7 @@ var Q = window.Q = Quintus()
 
 	  Q.input.on("start",this, function(){
 	    Q.clearStages();
-	    Q.stageScene('level1');
+	    Q.stageScene("level1");
 	  });
 
 	  button.on("click",function() {
@@ -53,8 +53,6 @@ var Q = window.Q = Quintus()
 				frame: 0,
 				x: 160,
 				y: 240,
-				vx: 0,
-				maxVel: 200,
 		   		stepDistance: 5, // should be tile size
    				stepDelay: 0.0045
 			});
