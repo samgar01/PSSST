@@ -4,8 +4,8 @@ var game = function() {
 // includes the `TileLayer` class as well as the `2d` componet.
 var Q = window.Q = Quintus()
 	.include("Audio, Sprites, Scenes, Input, Touch, UI, Anim, TMX, 2D")
-	.setup({width: 510, // Set the default width to 320 pixels
-			height: 510, // Set the default height to 480 pixels
+	.setup({width: 544, // Set the default width to 320 pixels
+			height: 544, // Set the default height to 480 pixels
 			})
 	// And turn on default input controls and touch input (for UI)
 	.controls(true).touch();

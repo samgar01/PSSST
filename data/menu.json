@@ -1,0 +1,13 @@
+{ "columns":19,
+ "image":"..\/images\/menu.png",
+ "imageheight":497,
+ "imagewidth":675,
+ "margin":0,
+ "name":"menu",
+ "spacing":0,
+ "tilecount":266,
+ "tileheight":34,
+ "tilewidth":34,
+ "transparentcolor":"#ff00ff",
+ "type":"tileset"
+}
