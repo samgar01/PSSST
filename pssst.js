@@ -22,7 +22,7 @@ var Q = window.Q = Quintus()
 	    x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
 	  }));
 
-	  var button = box.insert(new Q.UI.Button({ x: -1, y: 0, asset: "maintitle.png", scale: 0.73 }));
+	  var button = box.insert(new Q.UI.Button({ x: -1, y: 0, asset: "maintitle.png", scale: 1.25 }));
 
 	  Q.input.keyboardControls({
 			ENTER: "start"
@@ -53,10 +53,8 @@ var Q = window.Q = Quintus()
 				frame: 0,
 				x: 160,
 				y: 240,
-				vx: 0,
-				maxVel: 200,
-		   		stepDistance: 5, // should be tile size
-   				stepDelay: 0.0045
+		   		stepDistance: 2, // should be tile size
+   				stepDelay: 0.000001
 			});
 
 			this.p.gravity = 0;
@@ -139,7 +137,23 @@ var Q = window.Q = Quintus()
 	});
 
 
+	Q.Sprite.extend("SprayGusanos", {
+		init: function(p) {
+			this._super(p, {
+				sheet: "gusanoverdeU",
+				sprite: "gusanoverde",
+				frame: 0,
+			});
 
+			this.add('2d, aiBounce, animation, defaultEnemy');
+			this.on("gusanoverdeD", "dead");
+
+		},
+
+		step: function(p) {
+
+		}
+	});
 
 
 	/*---------------------------------FIN DEL JUEGO-----------------------------------*/
