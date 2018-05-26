@@ -1,3 +1,4 @@
 {
-	"GusanoVerdeU":{"sx":0,"sy":0,"tileW":45,"tileH":31,"frames":2}
+	"GusanoVerdeRight":{"sx":85,"sy":0,"tileW":42,"tileH":23,"frames":2},
+	"GusanoVerdeLeft":{"sx":0,"sy":0,"tileW":42,"tileH":23,"frames":2}
 }

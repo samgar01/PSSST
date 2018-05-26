@@ -90,13 +90,13 @@ var Q = window.Q = Quintus()
 	Q.Sprite.extend("GusanoAzul", {
 		init: function(p) {
 			this._super(p, {
-				sheet: "gusanoazulU",
-				sprite: "gusanoazul",
+				sheet: "GusanoAzulRight",
+				sprite: "GusanoAzul",
 				frame: 0,
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
-			this.on("gusanoazulD", "dead");
+			this.on("GusanoAzulD", "dead");
 
 		},
 
@@ -105,7 +105,7 @@ var Q = window.Q = Quintus()
 		}
 	});
 
-	Q.animations('gusanoazul', {
+	Q.animations('GusanoAzul', {
 		//move: { frames: [1,0], rate: 1/2},
 		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
 	});
@@ -116,13 +116,13 @@ var Q = window.Q = Quintus()
 	Q.Sprite.extend("GusanoVerde", {
 		init: function(p) {
 			this._super(p, {
-				sheet: "gusanoverdeU",
-				sprite: "gusanoverde",
+				sheet: "GusanoVerdeRight",
+				sprite: "GusanoVerde",
 				frame: 0,
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
-			this.on("gusanoverdeD", "dead");
+			this.on("GusanoVerdeD", "dead");
 
 		},
 
@@ -131,7 +131,7 @@ var Q = window.Q = Quintus()
 		}
 	});
 
-	Q.animations('gusanoverde', {
+	Q.animations('GusanoVerde', {
 		//move: { frames: [1,0], rate: 1/2},
 		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
 	});
@@ -140,8 +140,8 @@ var Q = window.Q = Quintus()
 	Q.Sprite.extend("SprayGusanos", {
 		init: function(p) {
 			this._super(p, {
-				sheet: "gusanoverdeU",
-				sprite: "gusanoverde",
+				sheet: "SprayGusanosU",
+				sprite: "SprayGusanos",
 				frame: 0,
 			});
 

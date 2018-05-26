@@ -1,0 +1,4 @@
+{
+	"RamiroRight":{"sx":75,"sy":0,"tileW":37,"tileH":26,"frames":2},
+	"RamiroLeft":{"sx":0,"sy":0,"tileW":37,"tileH":26,"frames":2}
+}
