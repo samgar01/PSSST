@@ -67,9 +67,19 @@ var Q = window.Q = Quintus()
 				y: 350,
 		   		stepDistance: 3.5, // should be tile size
    				stepDelay: 0.000001,
-   				gravity: 0
+   				gravity: 0,
+   				dead: false,
+   				disparo: false
 			});
+			this.add('2d, stepControls, animation');
 
+			this.on("destroyManolo", function() {
+				this.del("platformerControls");
+				this.p.dead = true;
+				this.p.vx = 0;
+				this.reset();
+			});
+		
 
 			// Add in pre-made components to get up and running quickly
 			// The `2d` component adds in default 2d collision detection
@@ -78,13 +88,25 @@ var Q = window.Q = Quintus()
 			// default input actions (left, right to move, up or action to jump)
 			// It also checks to make sure the player is on a horizontal surface before
 			// letting them jump.
-			this.add('2d, stepControls, animation');
+			
 			// Write event handlers to respond hook into behaviors.
 			// hit.sprite is called everytime the player collides with a sprite
 
 			this.on("bump.left,bump.right,bump.bottom,bump.top",function(collision) {
-
+				if(collision.obj.isA("Spray")){
+					if(collision.obj.p.sheet =="SprayGusanos")
+						this.p.disparo = "SprayGusanos";
+					else if(collision.obj.p.sheet =="SprayJosefinoRamiro")
+						this.p.disparo = "SprayJosefinoRamiro";
+					else if(collision.obj.p.sheet =="SprayAvispa")
+						this.p.disparo = "SprayAvispa";
+					console.log(collision.obj.p.sheet);
+				}
 			});
+		},
+		reset: function() {
+			this.destroy();
+			Q.stageScene("endGame",1, { label: "You Died" });
 		},
 		step: function(dt) {
 			//console.log("VX: "+this.p.speed);
@@ -93,6 +115,10 @@ var Q = window.Q = Quintus()
 			} else {
 				this.play("still");
 			}
+			if(this.p.disparo== "SprayGusanos" && Q.inputs[/*barra espaciadora, no se como se pone*/] )
+				var Ramiro = stage.insert(new Q.balas({x:this.p.x, y:this.p.y, sheet:"BalaGusano"}));
+
+			//console.log(this.p.y);
 		}
 
 	});
@@ -109,7 +135,9 @@ var Q = window.Q = Quintus()
 				sheet: "GusanoAzulRight",
 				sprite: "GusanoAzul",
 				frame: 0,
-				gravity: 0
+				gravity: 0,
+				vx: 100,
+				vy: -20
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
@@ -118,13 +146,28 @@ var Q = window.Q = Quintus()
 		},
 
 		step: function(p) {
+			if(this.p.vx > 0){
+				this.play("moveL");
+			}
+			else if(this.p.vx < 0){
+				this.play("moveR");
+			}
+			if(this.p.y > 494)
+				this.p.vy= -20;
+
+			if(this.p.y < 50)
+				this.p.vy= 20;
+
+			if(this.p.vy == 0)
+				this.p.vy= 20;
+			//console.log(this.p.vx);
 
 		}
 	});
 
 	Q.animations('GusanoAzul', {
-		//move: { frames: [1,0], rate: 1/2},
-		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
+		moveL: { frames: [0,1], rate: 1/4, loop: true, flip:false},
+		moveR: { frames: [0,1], rate: 1/4, flip: "x"}
 	});
 
 
@@ -136,7 +179,9 @@ var Q = window.Q = Quintus()
 				sheet: "GusanoVerdeRight",
 				sprite: "GusanoVerde",
 				frame: 0,
-				gravity: 0
+				gravity: 0,
+				vx: 100,
+				vy: -20
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
@@ -145,13 +190,26 @@ var Q = window.Q = Quintus()
 		},
 
 		step: function(p) {
+			if(this.p.vx > 0)
+				this.play("moveL");
+			
+			else if(this.p.vx < 0)
+				this.play("moveR");
+			
+			if(this.p.y > 494)
+				this.p.vy= -20;
 
+			if(this.p.y < 50)
+				this.p.vy= 20;
+
+			if(this.p.vy == 0)
+				this.p.vy= 20;
 		}
 	});
 
 	Q.animations('GusanoVerde', {
-		//move: { frames: [1,0], rate: 1/2},
-		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
+		moveL: { frames: [0,1], rate: 1/4, loop: true, flip:false},
+		moveR: { frames: [0,1], rate: 1/4, flip: "x"}
 	});
 
 
@@ -326,5 +384,41 @@ var Q = window.Q = Quintus()
 		Q.sheet("mainTitle","maintitle.png");
 	});
 
+/*---------------------------------COMPONENTE DEFAULTENEMY-----------------------------------*/
+Q.component("defaultEnemy",{
+	added: function() {
+		this.entity.on("bump.left,bump.right,bump.bottom,bump.top","collisionManolo");
+		// If the enemy gets hit on the top, destroy it
+		// and give the user a "hop"
+		//this.entity.on("bump.top","deadEnemy");
+
+		//this.entity.on("dead","animationDeadEnemy" );
+
+		//this.entity.on("destroy", "destroyEnemy");
+	},
+
+	extend:{
+		collisionManolo: function(collision) {
+			if(collision.obj.isA("Manolo")) {
+				collision.obj.trigger("destroyManolo");
+			}
+		},
+		/*deadEnemy: function(collision) {
+			if(collision.obj.isA("Mario")) {
+				Q.audio.play('mario_touch_enemy.mp3',{ loop: false });
+				this.trigger("dead");
+				collision.obj.p.vy = -300;
+			}
+		},
+		animationDeadEnemy: function() {
+			this.p.vx = 0;
+			this.play("dead", 1);
+		},
+		destroyEnemy: function() {
+			this.destroy();
+		}*/
+	}
+
+});
 
 };
