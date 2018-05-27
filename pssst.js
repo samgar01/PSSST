@@ -10,9 +10,22 @@ var Q = window.Q = Quintus()
 	// And turn on default input controls and touch input (for UI)
 	.controls(true).touch();
 
+/*----------------------------------LEVEL1---------------------------------------*/
 	Q.scene("level1",function(stage) {
-		Q.stageTMX("level.tmx",stage);//DESCOMENTAR
+		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo());
+		var GusanoAzul = stage.insert(new Q.GusanoAzul({x:50,y:50}));
+		var GusanoVerde = stage.insert(new Q.GusanoVerde({x:494,y:50}));
+		var Josefino = stage.insert(new Q.JosefinoRamiro({x:494, y:193}));
+		var Ramiro = stage.insert(new Q.JosefinoRamiro({x:494, y:296, sheet:"RamiroRight"}));
+		var avispaVerde = stage.insert(new Q.AvispaBertoldo({x:494, y:399}))
+		var avispaAzul = stage.insert(new Q.AvispaBertoldo({x:494, y:502, sheet:"AvispaMoradaRight"}))
+		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
+		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
+		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
+		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"SprayJosefinoRamiro"}));
+		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"SprayAvispa"}));
+
 
 		stage.add("viewport");
 	});
@@ -50,14 +63,13 @@ var Q = window.Q = Quintus()
 			this._super(p, {
 				sheet: "manoloU",
 				sprite: "manolo",
-				frame: 0,
-				x: 160,
-				y: 240,
-		   		stepDistance: 2, // should be tile size
-   				stepDelay: 0.000001
+				x: 272,
+				y: 350,
+		   		stepDistance: 3.5, // should be tile size
+   				stepDelay: 0.000001,
+   				gravity: 0
 			});
 
-			this.p.gravity = 0;
 
 			// Add in pre-made components to get up and running quickly
 			// The `2d` component adds in default 2d collision detection
@@ -69,6 +81,10 @@ var Q = window.Q = Quintus()
 			this.add('2d, stepControls, animation');
 			// Write event handlers to respond hook into behaviors.
 			// hit.sprite is called everytime the player collides with a sprite
+
+			this.on("bump.left,bump.right,bump.bottom,bump.top",function(collision) {
+
+			});
 		},
 		step: function(dt) {
 			//console.log("VX: "+this.p.speed);
@@ -93,10 +109,11 @@ var Q = window.Q = Quintus()
 				sheet: "GusanoAzulRight",
 				sprite: "GusanoAzul",
 				frame: 0,
+				gravity: 0
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
-			this.on("GusanoAzulD", "dead");
+			//this.on("GusanoAzulD", "dead");
 
 		},
 
@@ -119,10 +136,11 @@ var Q = window.Q = Quintus()
 				sheet: "GusanoVerdeRight",
 				sprite: "GusanoVerde",
 				frame: 0,
+				gravity: 0
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
-			this.on("GusanoVerdeD", "dead");
+			//this.on("GusanoVerdeD", "dead");
 
 		},
 
@@ -137,16 +155,14 @@ var Q = window.Q = Quintus()
 	});
 
 
-	Q.Sprite.extend("SprayGusanos", {
+ /* ---------------------------- Sprays --------------------------------- */
+	Q.Sprite.extend("Spray", {
 		init: function(p) {
 			this._super(p, {
-				sheet: "SprayGusanosU",
-				sprite: "SprayGusanos",
-				frame: 0,
+				sheet: "SprayGusanos",//SprayGusanos|SprayJosefinoRamiro|SprayAvispa
+				sprite: "Sprays",
+				gravity: 0
 			});
-
-			this.add('2d, aiBounce, animation, defaultEnemy');
-			this.on("gusanoverdeD", "dead");
 
 		},
 
@@ -155,6 +171,103 @@ var Q = window.Q = Quintus()
 		}
 	});
 
+ /* ---------------------------- AvispaBertoldo --------------------------------- */
+
+	Q.Sprite.extend("AvispaBertoldo", {
+		init: function(p) {
+			this._super(p, {
+				sheet: "AvispaVerdeRight",
+				sprite: "AvispaBertoldo",
+				frame: 0,
+				gravity: 0
+			});
+
+			this.add('2d, aiBounce, animation, defaultEnemy');
+			//this.on("AvispaD", "dead");
+
+		},
+
+		step: function(p) {
+
+		}
+	});
+
+	Q.animations('AvispaBertoldo', {
+		//move: { frames: [1,0], rate: 1/2},
+		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
+	});
+
+ /* ---------------------------- JosefinoRamiro --------------------------------- */
+
+	Q.Sprite.extend("JosefinoRamiro", {
+		init: function(p) {
+			this._super(p, {
+				sheet: "JosefinoRight",
+				sprite: "Josefino",//Josefino|Ramiro
+				frame: 0,
+				gravity: 0
+			});
+
+			this.add('2d, aiBounce, animation, defaultEnemy');
+			//this.on("JosefinoRamiroD", "dead");
+
+		},
+
+		step: function(p) {
+
+		}
+	});
+
+	Q.animations('JosefinoRamiro', {
+		//move: { frames: [1,0], rate: 1/2},
+		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
+	});
+
+
+ /* ---------------------------- Balas --------------------------------- */
+
+	Q.Sprite.extend("Balas", {
+		init: function(p) {
+			this._super(p, {
+				sheet: "JosefinoRight",
+				sprite: "BalaBertoldo",//BalaBertoldo|BalaGusano|BalaJosefino
+				frame: 0,
+				gravity: 0
+			});
+
+			this.add('2d');
+
+		},
+
+		step: function(p) {
+
+		}
+	});
+
+	/*---------------------------------Regadera-----------------------------------*/
+	Q.Sprite.extend("Regadera",{
+		init: function(p) {
+			this._super(p, {
+				sheet: "Regadera", // Setting a sprite sheet sets sprite width and height
+				gravity: 0
+			});
+
+			this.add();
+		}
+	});
+
+	/*---------------------------------Planta-----------------------------------*/
+	Q.Sprite.extend("Planta",{
+		init: function(p) {
+			this._super(p, {
+				sheet: "Plant", // Setting a sprite sheet sets sprite width and height
+				x: 272, // You can also set additional properties that can
+				y: 475 // be overridden on object creation
+			});
+
+			this.add('');
+		}
+	});
 
 	/*---------------------------------FIN DEL JUEGO-----------------------------------*/
 	Q.scene('endGame',function(stage) {
@@ -196,11 +309,20 @@ var Q = window.Q = Quintus()
 		Q.stageScene("mainTitle");
 	});
 
-	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","manolo.json","maintitle.png"], function() {
-		// Finally, call stageScene to run the game
+	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","Avispa-Bertoldo.png","balaBertoldo.PNG","balaGusano.PNG","balaJosefino.png","Josefino.png","Ramiro.png","Sprays.png","AvispaBertoldo.json","BalaBertoldo.json","BalaGusano.json","BalaJosefino.json","GusanoAzul.json","GusanoVerde.json","Josefino.json","Ramiro.json","Sprays.json","manolo.json","Regadera.png","Plant.png","PlantFlower.png","menu.png","maintitle.png"], function() {
 		Q.compileSheets("manolo.png","manolo.json");
 		Q.compileSheets("GusanoAzul.png","GusanoAzul.json");
 		Q.compileSheets("GusanoVerde.png","GusanoVerde.json");
+		Q.compileSheets("Avispa-Bertoldo.png","AvispaBertoldo.json");
+		Q.compileSheets("balaBertoldo.PNG","BalaBertoldo.json");
+		Q.compileSheets("balaGusano.PNG","BalaGusano.json");
+		Q.compileSheets("balaJosefino.png","BalaJosefino.json");
+		Q.compileSheets("Josefino.png","Josefino.json");
+		Q.compileSheets("Ramiro.png","Ramiro.json");
+		Q.compileSheets("Sprays.png","Sprays.json");
+		Q.sheet("Regadera","Regadera.png", { tilew: 39, tileh: 44});
+		Q.sheet("Plant","Plant.png", { tilew: 119, tileh: 261});
+		Q.sheet("PlantFlower","PlantFlower.png", { tilew: 172, tileh: 287});
 		Q.sheet("mainTitle","maintitle.png");
 	});
 

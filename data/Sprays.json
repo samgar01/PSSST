@@ -1,0 +1,5 @@
+{
+	"SprayGusanos":{"sx":0,"sy":0,"tileW":22,"tileH":30,"frames":1},
+	"SprayJosefinoRamiro":{"sx":23,"sy":0,"tileW":22,"tileH":30,"frames":1},
+	"SprayAvispa":{"sx":45,"sy":0,"tileW":22,"tileH":30,"frames":1}
+}

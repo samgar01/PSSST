@@ -1,3 +1,4 @@
 {
-	"BalaBertoldo":{"sx":0,"sy":0,"tileW":15,"tileH":13,"frames":2}
+	"BalaBertoldoDerecha":{"sx":0,"sy":0,"tileW":15,"tileH":13,"frames":1},
+	"BalaBertoldoIzquierda":{"sx":16,"sy":0,"tileW":15,"tileH":13,"frames":1}
 }
