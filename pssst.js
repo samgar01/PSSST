@@ -17,7 +17,7 @@ var Q = window.Q = Quintus()
 		var GusanoAzul = stage.insert(new Q.GusanoAzul({x:50,y:50}));
 		var GusanoVerde = stage.insert(new Q.GusanoVerde({x:494,y:50}));
 		var Josefino = stage.insert(new Q.JosefinoRamiro({x:494, y:193}));
-		var Ramiro = stage.insert(new Q.JosefinoRamiro({x:494, y:296, sheet:"RamiroRight"}));
+	    var Ramiro = stage.insert(new Q.JosefinoRamiro({x:494, y:296, sheet:"RamiroRight"}));
 		var avispaVerde = stage.insert(new Q.AvispaBertoldo({x:494, y:399}))
 		var avispaAzul = stage.insert(new Q.AvispaBertoldo({x:494, y:502, sheet:"AvispaMoradaRight"}))
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
@@ -72,8 +72,8 @@ var Q = window.Q = Quintus()
    				disparo: false,
    				direccion: "R",
    				stage: false,
-   				timeFire: 0.8,
-   				fire: 0.8
+   				timeFire: 0.4,
+   				fire: 0.4
 
 			});
 			this.add('2d, stepControls, animation');
@@ -127,11 +127,11 @@ var Q = window.Q = Quintus()
 				this.p.direccion = "R";
 			//console.log("disparo: " + this.p.disparo + " direccion: " + this.p.direccion + " disparo y direccion: " + this.p.disparo + this.p.direccion);
 			if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "R" && this.p.fire < 0){
-				this.p.stage.insert(new Q.Balas({x:this.p.x + 45, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion}));
+				this.p.stage.insert(new Q.Balas({x:this.p.x + 45, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo: this.p.disparo}));
 				this.p.fire= this.p.timeFire;
 			}
 			else if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "L" && this.p.fire < 0){
-				this.p.stage.insert(new Q.Balas({x:this.p.x - 45, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion}));
+				this.p.stage.insert(new Q.Balas({x:this.p.x - 45, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo : this.p.disparo}));
 				this.p.fire= this.p.timeFire;
 			}
 
@@ -154,7 +154,8 @@ var Q = window.Q = Quintus()
 				frame: 0,
 				gravity: 0,
 				vx: 100,
-				vy: -20
+				vy: -20,
+				tipo: "Gusano"
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
@@ -198,7 +199,8 @@ var Q = window.Q = Quintus()
 				frame: 0,
 				gravity: 0,
 				vx: 100,
-				vy: -20
+				vy: -20,
+				tipo: "Gusano"
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
@@ -258,7 +260,8 @@ var Q = window.Q = Quintus()
 				sheet: "AvispaVerdeRight",
 				sprite: "AvispaBertoldo",
 				frame: 0,
-				gravity: 0
+				gravity: 0,
+				tipo: "Avispa"
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
@@ -301,7 +304,8 @@ var Q = window.Q = Quintus()
 				frame: 0,
 				gravity: 0,
 				vx: 100,
-				vy: -20
+				vy: -20,
+				tipo: "Josefino"
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
@@ -343,23 +347,34 @@ var Q = window.Q = Quintus()
 				direccion: "R",
 				frame: 0,
 				gravity: 0,
-				timeLife: 2
+				timeLife: 2,
+				tipo: false
 			});
 
 			this.add('2d, animation');
+
+			this.on("bump.left,bump.right,bump.bottom,bump.top",function(collision) {
+				console.log("tipo enemigo:" + collision.obj.p.tipo + "tipo sprite: " + this.p.tipo);
+				if(collision.obj.p.tipo==this.p.tipo){
+					collision.obj.destroy();
+				}
+				else 
+					this.destroy();
+			});
 			
 		},
 
 		step: function(dt) {
+			console.log(this.p.tipo);
 			this.p.timeLife-=dt;
 			if(this.p.timeLife < 0)
 				this.destroy();
 			//if(this.p.sheet == "GusanoR" || this.p.sheet == "GusanoL")
 				//this.play("gusano");
 			if(this.p.direccion == "R")
-				this.p.vx = 100;
+				this.p.vx = 200;
 			else
-				this.p.vx = -100;
+				this.p.vx = -200;
 
 		}
 	});
