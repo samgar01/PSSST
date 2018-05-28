@@ -115,7 +115,7 @@ var Q = window.Q = Quintus()
 			} else {
 				this.play("still");
 			}
-			if(this.p.disparo== "SprayGusanos" && Q.inputs[/*barra espaciadora, no se como se pone*/] )
+			if(this.p.disparo== "SprayGusanos" && Q.inputs['space'] )
 				var Ramiro = stage.insert(new Q.balas({x:this.p.x, y:this.p.y, sheet:"BalaGusano"}));
 
 			//console.log(this.p.y);
@@ -213,6 +213,9 @@ var Q = window.Q = Quintus()
 	});
 
 
+
+
+
  /* ---------------------------- Sprays --------------------------------- */
 	Q.Sprite.extend("Spray", {
 		init: function(p) {
@@ -245,40 +248,70 @@ var Q = window.Q = Quintus()
 
 		},
 
-		step: function(p) {
+	step: function(p) {
+			if(this.p.vx > 0)
+				this.play("moveL");
+			
+			else if(this.p.vx < 0)
+				this.play("moveR");
+			
+			if(this.p.y > 494)
+				this.p.vy= -20;
 
+			if(this.p.y < 50)
+				this.p.vy= 20;
+
+			if(this.p.vy == 0)
+				this.p.vy= 20;
 		}
 	});
 
 	Q.animations('AvispaBertoldo', {
-		//move: { frames: [1,0], rate: 1/2},
-		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
+		moveL: { frames: [0,1], rate: 1/4, loop: true, flip:false},
+		moveR: { frames: [0,1], rate: 1/4, flip: "x"}
 	});
 
- /* ---------------------------- JosefinoRamiro --------------------------------- */
+
+
+	/* ---------------------------- Josefino --------------------------------- */
 
 	Q.Sprite.extend("JosefinoRamiro", {
 		init: function(p) {
 			this._super(p, {
 				sheet: "JosefinoRight",
-				sprite: "Josefino",//Josefino|Ramiro
+				sprite: "Josefino",
 				frame: 0,
-				gravity: 0
+				gravity: 0,
+				vx: 100,
+				vy: -20
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
-			//this.on("JosefinoRamiroD", "dead");
+			//this.on("GusanoVerdeD", "dead");
 
 		},
 
 		step: function(p) {
+			if(this.p.vx > 0)
+				this.play("moveL");
+			
+			else if(this.p.vx < 0)
+				this.play("moveR");
+			
+			if(this.p.y > 494)
+				this.p.vy= -20;
 
+			if(this.p.y < 50)
+				this.p.vy= 20;
+
+			if(this.p.vy == 0)
+				this.p.vy= 20;
 		}
 	});
 
-	Q.animations('JosefinoRamiro', {
-		//move: { frames: [1,0], rate: 1/2},
-		//dieG: { frames: [2], rate:1/2, loop: false, trigger: "goombaD"}
+	Q.animations('Josefino', {
+		moveL: { frames: [0,1], rate: 1/4, loop: true, flip:false},
+		moveR: { frames: [0,1], rate: 1/4, flip: "x"}
 	});
 
 
