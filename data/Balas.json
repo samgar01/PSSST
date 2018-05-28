@@ -1,8 +1,8 @@
 {
-	"JosefinoR":{"sx":0,"sy":0,"tileW":40,"tileH":13,"frames":1},
-	"JosefinoL":{"sx":40,"sy":0,"tileW":40,"tileH":13,"frames":1},
+	"GusanoR":{"sx":0,"sy":0,"tileW":40,"tileH":13,"frames":1},
+	"GusanoL":{"sx":40,"sy":0,"tileW":40,"tileH":13,"frames":1},
 	"AvispaR":{"sx":80,"sy":0,"tileW":40,"tileH":13,"frames":1},
 	"AvispaL":{"sx":120,"sy":0,"tileW":40,"tileH":13,"frames":1},
-	"GusanoR":{"sx":160,"sy":0,"tileW":40,"tileH":13,"frames":1},
-	"GusanoL":{"sx":160,"sy":0,"tileW":40,"tileH":13,"frames":1}
+	"JosefinoR":{"sx":160,"sy":0,"tileW":40,"tileH":13,"frames":3},
+	"JosefinoL":{"sx":160,"sy":0,"tileW":40,"tileH":13,"frames":3}
 }

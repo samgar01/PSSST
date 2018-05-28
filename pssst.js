@@ -14,8 +14,8 @@ var Q = window.Q = Quintus()
 	Q.scene("level1",function(stage) {
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
-		var GusanoAzul = stage.insert(new Q.GusanoAzul({x:50,y:50}));
-		var GusanoVerde = stage.insert(new Q.GusanoVerde({x:494,y:50}));
+		var GusanoAzul = stage.insert(new Q.Gusano({x:50,y:50}));
+		var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
 		var Josefino = stage.insert(new Q.JosefinoRamiro({x:494, y:193}));
 	    var Ramiro = stage.insert(new Q.JosefinoRamiro({x:494, y:296, sheet:"RamiroRight"}));
 		var avispaVerde = stage.insert(new Q.AvispaBertoldo({x:494, y:399}))
@@ -72,8 +72,8 @@ var Q = window.Q = Quintus()
    				disparo: false,
    				direccion: "R",
    				stage: false,
-   				timeFire: 0.4,
-   				fire: 0.4
+   				timeFire: 0.3,
+   				fire: 0.3
 
 			});
 			this.add('2d, stepControls, animation');
@@ -84,7 +84,7 @@ var Q = window.Q = Quintus()
 				this.p.vx = 0;
 				this.reset();
 			});
-		
+
 
 			// Add in pre-made components to get up and running quickly
 			// The `2d` component adds in default 2d collision detection
@@ -93,7 +93,7 @@ var Q = window.Q = Quintus()
 			// default input actions (left, right to move, up or action to jump)
 			// It also checks to make sure the player is on a horizontal surface before
 			// letting them jump.
-			
+
 			// Write event handlers to respond hook into behaviors.
 			// hit.sprite is called everytime the player collides with a sprite
 
@@ -127,11 +127,11 @@ var Q = window.Q = Quintus()
 				this.p.direccion = "R";
 			//console.log("disparo: " + this.p.disparo + " direccion: " + this.p.direccion + " disparo y direccion: " + this.p.disparo + this.p.direccion);
 			if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "R" && this.p.fire < 0){
-				this.p.stage.insert(new Q.Balas({x:this.p.x + 45, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo: this.p.disparo}));
+				this.p.stage.insert(new Q.Balas({x:this.p.x + 50, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo: this.p.disparo}));
 				this.p.fire= this.p.timeFire;
 			}
 			else if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "L" && this.p.fire < 0){
-				this.p.stage.insert(new Q.Balas({x:this.p.x - 45, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo : this.p.disparo}));
+				this.p.stage.insert(new Q.Balas({x:this.p.x - 50, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo : this.p.disparo}));
 				this.p.fire= this.p.timeFire;
 			}
 
@@ -144,9 +144,9 @@ var Q = window.Q = Quintus()
 		still: { frames: [0,1], rate: 2, flip: false, loop: true },
 	});
 
- /* ---------------------------- GusanoAzul --------------------------------- */
+ /* ---------------------------- Gusano --------------------------------- */
 
-	Q.Sprite.extend("GusanoAzul", {
+	Q.Sprite.extend("Gusano", {
 		init: function(p) {
 			this._super(p, {
 				sheet: "GusanoAzulRight",
@@ -188,51 +188,10 @@ var Q = window.Q = Quintus()
 		moveR: { frames: [0,1], rate: 1/4, flip: "x"}
 	});
 
-
- /* ---------------------------- GusanoVerde --------------------------------- */
-
-	Q.Sprite.extend("GusanoVerde", {
-		init: function(p) {
-			this._super(p, {
-				sheet: "GusanoVerdeRight",
-				sprite: "GusanoVerde",
-				frame: 0,
-				gravity: 0,
-				vx: 100,
-				vy: -20,
-				tipo: "Gusano"
-			});
-
-			this.add('2d, aiBounce, animation, defaultEnemy');
-			//this.on("GusanoVerdeD", "dead");
-
-		},
-
-		step: function(p) {
-			if(this.p.vx > 0)
-				this.play("moveL");
-			
-			else if(this.p.vx < 0)
-				this.play("moveR");
-			
-			if(this.p.y > 494)
-				this.p.vy= -20;
-
-			if(this.p.y < 50)
-				this.p.vy= 20;
-
-			if(this.p.vy == 0)
-				this.p.vy= 20;
-		}
-	});
-
 	Q.animations('GusanoVerde', {
 		moveL: { frames: [0,1], rate: 1/4, loop: true, flip:false},
 		moveR: { frames: [0,1], rate: 1/4, flip: "x"}
 	});
-
-
-
 
 
  /* ---------------------------- Sprays --------------------------------- */
@@ -272,10 +231,10 @@ var Q = window.Q = Quintus()
 	step: function(p) {
 			if(this.p.vx > 0)
 				this.play("moveL");
-			
+
 			else if(this.p.vx < 0)
 				this.play("moveR");
-			
+
 			if(this.p.y > 494)
 				this.p.vy= -20;
 
@@ -316,10 +275,10 @@ var Q = window.Q = Quintus()
 		step: function(p) {
 			if(this.p.vx > 0)
 				this.play("moveL");
-			
+
 			else if(this.p.vx < 0)
 				this.play("moveR");
-			
+
 			if(this.p.y > 494)
 				this.p.vy= -20;
 
@@ -347,7 +306,7 @@ var Q = window.Q = Quintus()
 				direccion: "R",
 				frame: 0,
 				gravity: 0,
-				timeLife: 2,
+				timeLife: 0.5,
 				tipo: false
 			});
 
@@ -358,30 +317,28 @@ var Q = window.Q = Quintus()
 				if(collision.obj.p.tipo==this.p.tipo){
 					collision.obj.destroy();
 				}
-				else 
+				else
 					this.destroy();
 			});
-			
+
 		},
 
 		step: function(dt) {
-			console.log(this.p.tipo);
+			//console.log("SHEET:"+this.p.sheet);
 			this.p.timeLife-=dt;
 			if(this.p.timeLife < 0)
 				this.destroy();
-			//if(this.p.sheet == "GusanoR" || this.p.sheet == "GusanoL")
-				//this.play("gusano");
 			if(this.p.direccion == "R")
-				this.p.vx = 200;
+				this.p.vx = 300;
 			else
-				this.p.vx = -200;
+				this.p.vx = -300;
 
 		}
 	});
 
-	//Q.animations("balas", {
-	//	gusano: {frames: [4,5,6], rate: 1/2, flip: false, loop: true }
-	//});
+	/*Q.animations("balas", {
+		JosefinoRamiro: {frames: [4,5,6], rate: 1/5, flip: false, loop: true }
+	});*/
 
 	/*---------------------------------Regadera-----------------------------------*/
 	Q.Sprite.extend("Regadera",{
@@ -401,17 +358,63 @@ var Q = window.Q = Quintus()
 			this._super(p, {
 				sheet: "Plant", // Setting a sprite sheet sets sprite width and height
 				x: 272, // You can also set additional properties that can
-				y: 475 // be overridden on object creation
+				y: 475, // be overridden on object creation
+				vidaFin: 400,
+				vida: 50,
+				timeT: 0.5,
+				time: 0.5,
+				insectos: 0,
+				end: false
 			});
 
-			this.add('');
+			this.on("insectoComePlanta",function() {
+				this.p.insectos++;
+			});
+
+			this.on("insectoNoComePlanta",function() {
+				this.p.insectos--;
+			});
+
+
+		//var plantaWin = stage.insert(new Q.Planta({scale:0.95, x: 272, y: 380,sheet:"PlantFlower"}));
+
+		},
+
+		step: function(dt) {
+			console.log("Vida:"+this.p.vida+"    Escala:"+this.p.scale+"    Y:"+this.p.y)
+			this.p.time-=dt;
+			if (!this.p.end && this.p.insectos == 0 && this.p.time < 0) {
+				this.p.vida++;
+				this.p.scale += 0.002;
+				this.p.y -= 0.26;
+				this.p.time = this.p.timeT;
+			}
+
+			if (!this.p.end && this.p.insectos > 0 && this.p.time < 0) {
+				this.p.vida -= this.p.insectos/2;
+				this.p.scale -= 0.0005*this.p.insectos;
+				this.p.y += 0.05*this.p.insectos;
+				this.p.time = this.p.timeT;
+			}
+
+			if (this.p.vida == this.p.vidaFin) {
+				this.p.sheet = "PlantFlower";
+				this.p.y -= 27;
+				this.p.x -= 27;
+				this.p.end = true;
+				this.p.vida = 50;
+				Q.stageScene("winGame",1, { label: "You win!" });
+			} else if (this.p.vida == 0) {
+				this.p.end = true;
+				Q.stageScene("endGame",1, { label: "You Died" });
+			}
 		}
 	});
 
 	/*---------------------------------FIN DEL JUEGO-----------------------------------*/
 	Q.scene('endGame',function(stage) {
 	  var box = stage.insert(new Q.UI.Container({
-	    x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
+	    x: Q.width/2, y: Q.height/2, fill: "rgba(255,255,255,0.5)"
 	  }));
 
 	  var button = box.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
@@ -429,7 +432,7 @@ var Q = window.Q = Quintus()
 	/*---------------------------------YOU WIN-----------------------------------*/
 	Q.scene('winGame',function(stage) {
 	  var box = stage.insert(new Q.UI.Container({
-	    x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
+	    x: Q.width/2, y: Q.height/2, fill: "rgba(255,255,255,0.5)"
 	  }));
 
 	  var button = box.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
