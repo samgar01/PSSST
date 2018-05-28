@@ -13,7 +13,7 @@ var Q = window.Q = Quintus()
 /*----------------------------------LEVEL1---------------------------------------*/
 	Q.scene("level1",function(stage) {
 		Q.stageTMX("level.tmx",stage);
-		var manolo = stage.insert(new Q.Manolo());
+		var manolo = stage.insert(new Q.Manolo({stage:stage}));
 		var GusanoAzul = stage.insert(new Q.GusanoAzul({x:50,y:50}));
 		var GusanoVerde = stage.insert(new Q.GusanoVerde({x:494,y:50}));
 		var Josefino = stage.insert(new Q.JosefinoRamiro({x:494, y:193}));
@@ -23,8 +23,8 @@ var Q = window.Q = Quintus()
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
 		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
-		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"SprayJosefinoRamiro"}));
-		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"SprayAvispa"}));
+		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
+		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
 
 
 		stage.add("viewport");
@@ -69,7 +69,12 @@ var Q = window.Q = Quintus()
    				stepDelay: 0.000001,
    				gravity: 0,
    				dead: false,
-   				disparo: false
+   				disparo: false,
+   				direccion: "R",
+   				stage: false,
+   				timeFire: 0.8,
+   				fire: 0.8
+
 			});
 			this.add('2d, stepControls, animation');
 
@@ -93,14 +98,14 @@ var Q = window.Q = Quintus()
 			// hit.sprite is called everytime the player collides with a sprite
 
 			this.on("bump.left,bump.right,bump.bottom,bump.top",function(collision) {
+
 				if(collision.obj.isA("Spray")){
-					if(collision.obj.p.sheet =="SprayGusanos")
-						this.p.disparo = "SprayGusanos";
-					else if(collision.obj.p.sheet =="SprayJosefinoRamiro")
-						this.p.disparo = "SprayJosefinoRamiro";
-					else if(collision.obj.p.sheet =="SprayAvispa")
-						this.p.disparo = "SprayAvispa";
-					console.log(collision.obj.p.sheet);
+					if(collision.obj.p.sheet =="Gusano")
+						this.p.disparo = "Gusano";
+					else if(collision.obj.p.sheet =="Josefino")
+						this.p.disparo = "Josefino";
+					else if(collision.obj.p.sheet =="Avispa")
+						this.p.disparo = "Avispa";
 				}
 			});
 		},
@@ -109,14 +114,26 @@ var Q = window.Q = Quintus()
 			Q.stageScene("endGame",1, { label: "You Died" });
 		},
 		step: function(dt) {
+			this.p.fire-=dt;
 			//console.log("VX: "+this.p.speed);
 			if(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) {
 				this.play("walk");
 			} else {
 				this.play("still");
 			}
-			if(this.p.disparo== "SprayGusanos" && Q.inputs['space'] )
-				var Ramiro = stage.insert(new Q.balas({x:this.p.x, y:this.p.y, sheet:"BalaGusano"}));
+			if(Q.inputs['left'])
+				this.p.direccion = "L";
+			if(Q.inputs['right'])
+				this.p.direccion = "R";
+			//console.log("disparo: " + this.p.disparo + " direccion: " + this.p.direccion + " disparo y direccion: " + this.p.disparo + this.p.direccion);
+			if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "R" && this.p.fire < 0){
+				this.p.stage.insert(new Q.Balas({x:this.p.x + 45, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion}));
+				this.p.fire= this.p.timeFire;
+			}
+			else if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "L" && this.p.fire < 0){
+				this.p.stage.insert(new Q.Balas({x:this.p.x - 45, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion}));
+				this.p.fire= this.p.timeFire;
+			}
 
 			//console.log(this.p.y);
 		}
@@ -220,10 +237,11 @@ var Q = window.Q = Quintus()
 	Q.Sprite.extend("Spray", {
 		init: function(p) {
 			this._super(p, {
-				sheet: "SprayGusanos",//SprayGusanos|SprayJosefinoRamiro|SprayAvispa
-				sprite: "Sprays",
+				sheet: "Gusano",//Gusanos|Josefino|Avispa
+				//sprite: "Sprays",
 				gravity: 0
 			});
+
 
 		},
 
@@ -320,20 +338,35 @@ var Q = window.Q = Quintus()
 	Q.Sprite.extend("Balas", {
 		init: function(p) {
 			this._super(p, {
-				sheet: "JosefinoRight",
-				sprite: "BalaBertoldo",//BalaBertoldo|BalaGusano|BalaJosefino
+				sheet: "GusanoR",
+				sprite: "balas",
+				direccion: "R",
 				frame: 0,
-				gravity: 0
+				gravity: 0,
+				timeLife: 2
 			});
 
-			this.add('2d');
-
+			this.add('2d, animation');
+			
 		},
 
-		step: function(p) {
+		step: function(dt) {
+			this.p.timeLife-=dt;
+			if(this.p.timeLife < 0)
+				this.destroy();
+			//if(this.p.sheet == "GusanoR" || this.p.sheet == "GusanoL")
+				//this.play("gusano");
+			if(this.p.direccion == "R")
+				this.p.vx = 100;
+			else
+				this.p.vx = -100;
 
 		}
 	});
+
+	//Q.animations("balas", {
+	//	gusano: {frames: [4,5,6], rate: 1/2, flip: false, loop: true }
+	//});
 
 	/*---------------------------------Regadera-----------------------------------*/
 	Q.Sprite.extend("Regadera",{
@@ -400,7 +433,7 @@ var Q = window.Q = Quintus()
 		Q.stageScene("mainTitle");
 	});
 
-	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","Avispa-Bertoldo.png","balaBertoldo.PNG","balaGusano.PNG","balaJosefino.png","Josefino.png","Ramiro.png","Sprays.png","AvispaBertoldo.json","BalaBertoldo.json","BalaGusano.json","BalaJosefino.json","GusanoAzul.json","GusanoVerde.json","Josefino.json","Ramiro.json","Sprays.json","manolo.json","Regadera.png","Plant.png","PlantFlower.png","menu.png","maintitle.png"], function() {
+	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","Avispa-Bertoldo.png","balaBertoldo.PNG","balaGusano.PNG","balaJosefino.png","Josefino.png","Ramiro.png","Sprays.png","AvispaBertoldo.json","BalaBertoldo.json","BalaGusano.json","BalaJosefino.json","GusanoAzul.json","GusanoVerde.json","Josefino.json","Ramiro.json","Sprays.json","manolo.json","Regadera.png","Plant.png","PlantFlower.png","menu.png","maintitle.png","balas.png", "Balas.json"], function() {
 		Q.compileSheets("manolo.png","manolo.json");
 		Q.compileSheets("GusanoAzul.png","GusanoAzul.json");
 		Q.compileSheets("GusanoVerde.png","GusanoVerde.json");
@@ -411,6 +444,8 @@ var Q = window.Q = Quintus()
 		Q.compileSheets("Josefino.png","Josefino.json");
 		Q.compileSheets("Ramiro.png","Ramiro.json");
 		Q.compileSheets("Sprays.png","Sprays.json");
+		Q.compileSheets("balas.png","Balas.json");
+
 		Q.sheet("Regadera","Regadera.png", { tilew: 39, tileh: 44});
 		Q.sheet("Plant","Plant.png", { tilew: 119, tileh: 261});
 		Q.sheet("PlantFlower","PlantFlower.png", { tilew: 172, tileh: 287});
