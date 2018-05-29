@@ -186,14 +186,14 @@ var Q = window.Q = Quintus()
 				vx: 100,
 				vy: -20,
 				tipo: "Gusano",
-				planta: null, 
+				planta: null,
 				comePlanta: false
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
 			//this.on("GusanoAzulD", "dead");
 
-			
+
 
 		},
 
@@ -216,7 +216,7 @@ var Q = window.Q = Quintus()
 
 		},
 
-		
+
 	});
 
 	Q.animations('GusanoAzul', {
@@ -259,7 +259,7 @@ var Q = window.Q = Quintus()
 				//vx: 100,
 				//vy: -20,
 				tipo: "Avispa",
-				planta: null, 
+				planta: null,
 				comePlanta: false
 			});
 
@@ -308,7 +308,7 @@ var Q = window.Q = Quintus()
 				vx: 100,
 				vy: -20,
 				tipo: "Josefino",
-				planta: null, 
+				planta: null,
 				comePlanta: false
 			});
 
@@ -415,7 +415,7 @@ var Q = window.Q = Quintus()
 				end: 0
 			});
 
-			
+
 		//var plantaWin = stage.insert(new Q.Planta({scale:0.95, x: 272, y: 380,sheet:"PlantFlower"}));
 
 		},
@@ -438,7 +438,7 @@ var Q = window.Q = Quintus()
 				this.p.time = this.p.timeT;
 			}
 
-			if (this.p.vida == this.p.vidaFin) {
+			if (this.p.vida >= this.p.vidaFin) {
 				this.p.sheet = "PlantFlower";
 				this.p.y -= 27;
 				this.p.x -= 27;
@@ -541,9 +541,9 @@ Q.component("defaultEnemy",{
 				Q.state.inc("insectos",1);
 			}
 
-		
+
 		},
-		
+
 		/*deadEnemy: function(collision) {
 			if(collision.obj.isA("Mario")) {
 				Q.audio.play('mario_touch_enemy.mp3',{ loop: false });
