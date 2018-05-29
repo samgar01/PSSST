@@ -18,8 +18,8 @@ var Q = window.Q = Quintus()
 		var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
 		var Josefino = stage.insert(new Q.JosefinoRamiro({x:494, y:193}));
 	    var Ramiro = stage.insert(new Q.JosefinoRamiro({x:494, y:296, sheet:"RamiroRight"}));
-		var avispaVerde = stage.insert(new Q.AvispaBertoldo({x:494, y:399}))
-		var avispaAzul = stage.insert(new Q.AvispaBertoldo({x:494, y:502, sheet:"AvispaMoradaRight"}))
+		//var avispaAmarilla = stage.insert(new Q.AvispaBertoldo({x:100, y:77}))
+		//var avispa = stage.insert(new Q.AvispaBertoldo({x:150, y:77, sprite:"AvispaMorada", sheet:"AvispaMoradaLeft"}))
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
 		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
@@ -27,6 +27,8 @@ var Q = window.Q = Quintus()
 		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
 
 		Q.state.set("end",0);
+
+		Q.state.set("insectos",0);
 
 		stage.add("viewport");
 	});
@@ -80,7 +82,7 @@ var Q = window.Q = Quintus()
 			this.add('2d, stepControls, animation');
 
 			this.on("destroyManolo", function() {
-				this.del("platformerControls");
+				this.del("stepControls");
 				this.p.dead = true;
 				this.p.vx = 0;
 				Q.state.set("end",1);
@@ -123,7 +125,7 @@ var Q = window.Q = Quintus()
 		},
 		step: function(dt) {
 			this.p.fire-=dt;
-			console.log(this.p.disparo + this.p.direccion);
+			// console.log(this.p.disparo + this.p.direccion);
 			if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) {
 				this.play("walk");
 			}
@@ -183,11 +185,15 @@ var Q = window.Q = Quintus()
 				gravity: 0,
 				vx: 100,
 				vy: -20,
-				tipo: "Gusano"
+				tipo: "Gusano",
+				planta: null, 
+				comePlanta: false
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
 			//this.on("GusanoAzulD", "dead");
+
+			
 
 		},
 
@@ -198,17 +204,19 @@ var Q = window.Q = Quintus()
 			else if(this.p.vx < 0){
 				this.play("moveR");
 			}
-			if(this.p.y > 494)
+			if(this.p.y > 494 && !this.p.comePlanta)
 				this.p.vy= -20;
 
-			if(this.p.y < 50)
+			if(this.p.y < 50  && !this.p.comePlanta)
 				this.p.vy= 20;
 
-			if(this.p.vy == 0)
+			if(this.p.vy == 0 && !this.p.comePlanta)
 				this.p.vy= 20;
 			//console.log(this.p.vx);
 
-		}
+		},
+
+		
 	});
 
 	Q.animations('GusanoAzul', {
@@ -244,11 +252,15 @@ var Q = window.Q = Quintus()
 	Q.Sprite.extend("AvispaBertoldo", {
 		init: function(p) {
 			this._super(p, {
-				sheet: "AvispaVerdeRight",
+				sheet: "AvispaAmarillaRight",
 				sprite: "AvispaBertoldo",
 				frame: 0,
 				gravity: 0,
-				tipo: "Avispa"
+				//vx: 100,
+				//vy: -20,
+				tipo: "Avispa",
+				planta: null, 
+				comePlanta: false
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
@@ -256,22 +268,25 @@ var Q = window.Q = Quintus()
 
 		},
 
-	step: function(p) {
-			if(this.p.vx > 0)
+		step: function(p) {
+			if(this.p.vx > 0){
 				this.play("moveL");
-
-			else if(this.p.vx < 0)
+			}
+			else if(this.p.vx < 0){
 				this.play("moveR");
-
-			if(this.p.y > 494)
+			}
+			if(this.p.y > 494 && !this.p.comePlanta)
 				this.p.vy= -20;
 
-			if(this.p.y < 50)
+			if(this.p.y < 50 && !this.p.comePlanta)
 				this.p.vy= 20;
 
-			if(this.p.vy == 0)
+			if(this.p.vy == 0 && !this.p.comePlanta)
 				this.p.vy= 20;
+			//console.log(this.p.vx);
+
 		}
+
 	});
 
 	Q.animations('AvispaBertoldo', {
@@ -292,7 +307,9 @@ var Q = window.Q = Quintus()
 				gravity: 0,
 				vx: 100,
 				vy: -20,
-				tipo: "Josefino"
+				tipo: "Josefino",
+				planta: null, 
+				comePlanta: false
 			});
 
 			this.add('2d, aiBounce, animation, defaultEnemy');
@@ -301,20 +318,22 @@ var Q = window.Q = Quintus()
 		},
 
 		step: function(p) {
-			if(this.p.vx > 0)
+			if(this.p.vx > 0 )
 				this.play("moveL");
 
 			else if(this.p.vx < 0)
 				this.play("moveR");
 
-			if(this.p.y > 494)
+			if(this.p.y > 494 && !this.p.comePlanta)
 				this.p.vy= -20;
 
-			if(this.p.y < 50)
+			if(this.p.y < 50 && !this.p.comePlanta)
 				this.p.vy= 20;
 
-			if(this.p.vy == 0)
+			if(this.p.vy == 0 && !this.p.comePlanta)
 				this.p.vy= 20;
+
+
 		}
 	});
 
@@ -343,7 +362,9 @@ var Q = window.Q = Quintus()
 			this.on("bump.left,bump.right,bump.bottom,bump.top",function(collision) {
 				console.log("tipo enemigo:" + collision.obj.p.tipo + "tipo sprite: " + this.p.tipo);
 				if(collision.obj.p.tipo==this.p.tipo){
+					console.log(Q.state.get("insectos"));
 					collision.obj.destroy();
+					Q.state.dec("insectos",1);
 				}
 				else
 					this.destroy();
@@ -387,40 +408,33 @@ var Q = window.Q = Quintus()
 				sheet: "Plant", // Setting a sprite sheet sets sprite width and height
 				x: 272, // You can also set additional properties that can
 				y: 475, // be overridden on object creation
-				vidaFin: 400,
+				vidaFin: 300,
 				vida: 50,
 				timeT: 0.5,
 				time: 0.5,
-				insectos: 0,
 				end: 0
 			});
 
-			this.on("insectoComePlanta",function() {
-				this.p.insectos++;
-			});
-
-			this.on("insectoNoComePlanta",function() {
-				this.p.insectos--;
-			});
-
+			
 		//var plantaWin = stage.insert(new Q.Planta({scale:0.95, x: 272, y: 380,sheet:"PlantFlower"}));
 
 		},
 
 		step: function(dt) {
-			console.log("END: "+this.p.end);
+			//console.log("END: "+this.p.end);
 			this.p.time-=dt;
-			if (Q.state.get("end")==0 && this.p.insectos == 0 && this.p.time < 0) {
+			if (Q.state.get("end") == 0 && Q.state.get("insectos") == 0 && this.p.time < 0 ) {
 				this.p.vida++;
 				this.p.scale += 0.002;
 				this.p.y -= 0.26;
 				this.p.time = this.p.timeT;
+
 			}
 
-			if (Q.state.get("end")==0 && this.p.insectos > 0 && this.p.time < 0) {
-				this.p.vida -= this.p.insectos/2;
-				this.p.scale -= 0.0005*this.p.insectos;
-				this.p.y += 0.05*this.p.insectos;
+			if (Q.state.get("end") == 0 &&  Q.state.get("insectos") > 0 && this.p.time < 0) {
+				this.p.vida -=  Q.state.get("insectos")/2;
+				this.p.scale -= 0.0005* Q.state.get("insectos");
+				this.p.y += 0.05* Q.state.get("insectos");
 				this.p.time = this.p.timeT;
 			}
 
@@ -500,7 +514,8 @@ var Q = window.Q = Quintus()
 /*---------------------------------COMPONENTE DEFAULTENEMY-----------------------------------*/
 Q.component("defaultEnemy",{
 	added: function() {
-		this.entity.on("bump.left,bump.right,bump.bottom,bump.top","collisionManolo");
+		this.entity.on("bump.left,bump.right,bump.bottom,bump.top","collision");
+
 		// If the enemy gets hit on the top, destroy it
 		// and give the user a "hop"
 		//this.entity.on("bump.top","deadEnemy");
@@ -511,11 +526,24 @@ Q.component("defaultEnemy",{
 	},
 
 	extend:{
-		collisionManolo: function(collision) {
+		collision: function(collision) {
 			if(collision.obj.isA("Manolo")) {
 				collision.obj.trigger("destroyManolo");
 			}
+
+			else if(collision.obj.isA("Planta")) {
+				this.p.planta = collision.obj;
+				this.p.vy = 0;
+				this.p.vx = 0;
+				this.p.comePlanta = true;
+				this.del('aiBounce');
+				console.log(Q.state.get("insectos"));
+				Q.state.inc("insectos",1);
+			}
+
+		
 		},
+		
 		/*deadEnemy: function(collision) {
 			if(collision.obj.isA("Mario")) {
 				Q.audio.play('mario_touch_enemy.mp3',{ loop: false });
