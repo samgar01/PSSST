@@ -100,12 +100,18 @@ var Q = window.Q = Quintus()
 			this.on("bump.left,bump.right,bump.bottom,bump.top",function(collision) {
 
 				if(collision.obj.isA("Spray")){
-					if(collision.obj.p.sheet =="Gusano")
+					if(collision.obj.p.sheet =="Gusano"){
 						this.p.disparo = "Gusano";
-					else if(collision.obj.p.sheet =="Josefino")
+						this.play("GusanoL");
+					}
+					else if(collision.obj.p.sheet =="Josefino"){
 						this.p.disparo = "Josefino";
-					else if(collision.obj.p.sheet =="Avispa")
+						this.play("JosefinoL");
+					}
+					else if(collision.obj.p.sheet =="Avispa"){
 						this.p.disparo = "Avispa";
+						this.play("AvispaL");
+					}
 				}
 			});
 		},
@@ -115,23 +121,31 @@ var Q = window.Q = Quintus()
 		},
 		step: function(dt) {
 			this.p.fire-=dt;
-			//console.log("VX: "+this.p.speed);
-			if(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) {
+			console.log(this.p.disparo + this.p.direccion);
+			if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) {
 				this.play("walk");
-			} else {
+			} 
+			else if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo){
+				this.play(this.p.disparo + this.p.direccion);
+			}
+			else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) {
 				this.play("still");
 			}
+			else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo) {
+				this.play(this.p.disparo + this.p.direccion + "Still");
+			}
+
 			if(Q.inputs['left'])
 				this.p.direccion = "L";
 			if(Q.inputs['right'])
 				this.p.direccion = "R";
 			//console.log("disparo: " + this.p.disparo + " direccion: " + this.p.direccion + " disparo y direccion: " + this.p.disparo + this.p.direccion);
 			if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "R" && this.p.fire < 0){
-				this.p.stage.insert(new Q.Balas({x:this.p.x + 50, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo: this.p.disparo}));
+				this.p.stage.insert(new Q.Balas({x:this.p.x + 66, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo: this.p.disparo}));
 				this.p.fire= this.p.timeFire;
 			}
 			else if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "L" && this.p.fire < 0){
-				this.p.stage.insert(new Q.Balas({x:this.p.x - 50, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo : this.p.disparo}));
+				this.p.stage.insert(new Q.Balas({x:this.p.x - 66, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo : this.p.disparo}));
 				this.p.fire= this.p.timeFire;
 			}
 
@@ -142,6 +156,18 @@ var Q = window.Q = Quintus()
 	Q.animations("manolo", {
 		walk: { frames: [0,1], rate: 1/16, flip: false, loop: true },
 		still: { frames: [0,1], rate: 2, flip: false, loop: true },
+		GusanoL: { frames: [2,3], rate: 1/16, flip: false, loop: true },
+		GusanoLStill: { frames: [2,3], rate: 2, flip: false, loop: true },
+		GusanoR: { frames: [4,5], rate: 1/16, flip: false, loop: true },
+	    GusanoRStill: { frames: [4,5], rate: 2, flip: false, loop: true },
+		JosefinoL: { frames: [6,7], rate: 1/16, flip: false, loop: true },
+		JosefinoLStill: { frames: [6,7], rate: 2, flip: false, loop: true },
+		JosefinoR: { frames: [8,9], rate: 1/16, flip: false, loop: true },
+		JosefinoRStill: { frames: [8,9], rate: 2, flip: false, loop: true },
+		AvispaL: { frames: [10,11], rate: 1/16, flip: false, loop: true },
+		AvispaLStill: { frames: [10,11], rate: 2, flip: false, loop: true },
+		AvispaR: { frames: [12,13], rate: 1/16, flip: false, loop: true },
+		AvispaRStill: { frames: [12,13], rate: 2, flip: false, loop: true }
 	});
 
  /* ---------------------------- Gusano --------------------------------- */
@@ -337,7 +363,7 @@ var Q = window.Q = Quintus()
 	});
 
 	/*Q.animations("balas", {
-		JosefinoRamiro: {frames: [4,5,6], rate: 1/5, flip: false, loop: true }
+		JosefinoRamiro: {frames: [4], rate: 1/5, flip: false, loop: true }
 	});*/
 
 	/*---------------------------------Regadera-----------------------------------*/
@@ -381,7 +407,7 @@ var Q = window.Q = Quintus()
 		},
 
 		step: function(dt) {
-			console.log("Vida:"+this.p.vida+"    Escala:"+this.p.scale+"    Y:"+this.p.y)
+			//console.log("Vida:"+this.p.vida+"    Escala:"+this.p.scale+"    Y:"+this.p.y)
 			this.p.time-=dt;
 			if (!this.p.end && this.p.insectos == 0 && this.p.time < 0) {
 				this.p.vida++;

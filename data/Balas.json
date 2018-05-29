@@ -1,4 +1,5 @@
 {
+	"TodasBalas":{"sx":0,"sy":0,"tileW":40,"tileH":13,"frames":7},
 	"GusanoR":{"sx":0,"sy":0,"tileW":40,"tileH":13,"frames":1},
 	"GusanoL":{"sx":40,"sy":0,"tileW":40,"tileH":13,"frames":1},
 	"AvispaR":{"sx":80,"sy":0,"tileW":40,"tileH":13,"frames":1},
