@@ -26,6 +26,7 @@ var Q = window.Q = Quintus()
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
 		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
 
+		Q.state.set("end",0);
 
 		stage.add("viewport");
 	});
@@ -82,6 +83,7 @@ var Q = window.Q = Quintus()
 				this.del("platformerControls");
 				this.p.dead = true;
 				this.p.vx = 0;
+				Q.state.set("end",1);
 				this.reset();
 			});
 
@@ -124,7 +126,7 @@ var Q = window.Q = Quintus()
 			console.log(this.p.disparo + this.p.direccion);
 			if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) {
 				this.play("walk");
-			} 
+			}
 			else if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo){
 				this.play(this.p.disparo + this.p.direccion);
 			}
@@ -390,7 +392,7 @@ var Q = window.Q = Quintus()
 				timeT: 0.5,
 				time: 0.5,
 				insectos: 0,
-				end: false
+				end: 0
 			});
 
 			this.on("insectoComePlanta",function() {
@@ -401,22 +403,21 @@ var Q = window.Q = Quintus()
 				this.p.insectos--;
 			});
 
-
 		//var plantaWin = stage.insert(new Q.Planta({scale:0.95, x: 272, y: 380,sheet:"PlantFlower"}));
 
 		},
 
 		step: function(dt) {
-			//console.log("Vida:"+this.p.vida+"    Escala:"+this.p.scale+"    Y:"+this.p.y)
+			console.log("END: "+this.p.end);
 			this.p.time-=dt;
-			if (!this.p.end && this.p.insectos == 0 && this.p.time < 0) {
+			if (Q.state.get("end")==0 && this.p.insectos == 0 && this.p.time < 0) {
 				this.p.vida++;
 				this.p.scale += 0.002;
 				this.p.y -= 0.26;
 				this.p.time = this.p.timeT;
 			}
 
-			if (!this.p.end && this.p.insectos > 0 && this.p.time < 0) {
+			if (Q.state.get("end")==0 && this.p.insectos > 0 && this.p.time < 0) {
 				this.p.vida -= this.p.insectos/2;
 				this.p.scale -= 0.0005*this.p.insectos;
 				this.p.y += 0.05*this.p.insectos;
@@ -427,11 +428,11 @@ var Q = window.Q = Quintus()
 				this.p.sheet = "PlantFlower";
 				this.p.y -= 27;
 				this.p.x -= 27;
-				this.p.end = true;
+				Q.state.set("end",1);
 				this.p.vida = 50;
 				Q.stageScene("winGame",1, { label: "You win!" });
 			} else if (this.p.vida == 0) {
-				this.p.end = true;
+				Q.state.set("end",1);
 				Q.stageScene("endGame",1, { label: "You Died" });
 			}
 		}
