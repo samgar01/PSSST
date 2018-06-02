@@ -125,32 +125,37 @@ var Q = window.Q = Quintus()
 		},
 		step: function(dt) {
 			this.p.fire-=dt;
-			// console.log(this.p.disparo + this.p.direccion);
-			if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) {
-				this.play("walk");
-			}
-			else if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo){
-				this.play(this.p.disparo + this.p.direccion);
-			}
-			else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) {
-				this.play("still");
-			}
-			else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo) {
-				this.play(this.p.disparo + this.p.direccion + "Still");
-			}
+			if (Q.state.get("end") == 0) {
+				// console.log(this.p.disparo + this.p.direccion);
+				if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) {
+					this.play("walk");
+				}
+				else if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo){
+					this.play(this.p.disparo + this.p.direccion);
+				}
+				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) {
+					this.play("still");
+				}
+				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo) {
+					this.play(this.p.disparo + this.p.direccion + "Still");
+				}
 
-			if(Q.inputs['left'])
-				this.p.direccion = "L";
-			if(Q.inputs['right'])
-				this.p.direccion = "R";
-			//console.log("disparo: " + this.p.disparo + " direccion: " + this.p.direccion + " disparo y direccion: " + this.p.disparo + this.p.direccion);
-			if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "R" && this.p.fire < 0){
-				this.p.stage.insert(new Q.Balas({x:this.p.x + 66, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo: this.p.disparo}));
-				this.p.fire= this.p.timeFire;
-			}
-			else if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "L" && this.p.fire < 0){
-				this.p.stage.insert(new Q.Balas({x:this.p.x - 66, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo : this.p.disparo}));
-				this.p.fire= this.p.timeFire;
+				if(Q.inputs['left'])
+					this.p.direccion = "L";
+				if(Q.inputs['right'])
+					this.p.direccion = "R";
+				//console.log("disparo: " + this.p.disparo + " direccion: " + this.p.direccion + " disparo y direccion: " + this.p.disparo + this.p.direccion);
+				if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "R" && this.p.fire < 0){
+					this.p.stage.insert(new Q.Balas({x:this.p.x + 66, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo: this.p.disparo}));
+					this.p.fire= this.p.timeFire;
+				}
+				else if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "L" && this.p.fire < 0){
+					this.p.stage.insert(new Q.Balas({x:this.p.x - 66, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo : this.p.disparo}));
+					this.p.fire= this.p.timeFire;
+				}
+			} else {
+				this.del("stepControls");
+				this.del("animation");
 			}
 
 			//console.log(this.p.y);
@@ -363,8 +368,10 @@ var Q = window.Q = Quintus()
 				console.log("tipo enemigo:" + collision.obj.p.tipo + "tipo sprite: " + this.p.tipo);
 				if(collision.obj.p.tipo==this.p.tipo){
 					console.log(Q.state.get("insectos"));
+					if (collision.obj.p.comePlanta) {
+						Q.state.dec("insectos",1);
+					}
 					collision.obj.destroy();
-					Q.state.dec("insectos",1);
 				}
 				else
 					this.destroy();
@@ -408,10 +415,10 @@ var Q = window.Q = Quintus()
 				sheet: "Plant", // Setting a sprite sheet sets sprite width and height
 				x: 272, // You can also set additional properties that can
 				y: 475, // be overridden on object creation
-				vidaFin: 300,
-				vida: 50,
-				timeT: 0.5,
-				time: 0.5,
+				vidaFin: 350,
+				vida: 100,
+				timeT: 0.2,
+				time: 0.2,
 				end: 0
 			});
 
@@ -421,33 +428,33 @@ var Q = window.Q = Quintus()
 		},
 
 		step: function(dt) {
-			//console.log("END: "+this.p.end);
+			//console.log("VIDA:   "+this.p.vida);
 			this.p.time-=dt;
 			if (Q.state.get("end") == 0 && Q.state.get("insectos") == 0 && this.p.time < 0 ) {
 				this.p.vida++;
 				this.p.scale += 0.002;
 				this.p.y -= 0.26;
 				this.p.time = this.p.timeT;
-
 			}
 
 			if (Q.state.get("end") == 0 &&  Q.state.get("insectos") > 0 && this.p.time < 0) {
 				this.p.vida -=  Q.state.get("insectos")/2;
 				this.p.scale -= 0.0005* Q.state.get("insectos");
-				this.p.y += 0.05* Q.state.get("insectos");
+				this.p.y += 0.062* Q.state.get("insectos");
 				this.p.time = this.p.timeT;
 			}
 
 			if (this.p.vida >= this.p.vidaFin) {
 				this.p.sheet = "PlantFlower";
-				this.p.y -= 27;
-				this.p.x -= 27;
+				this.p.y -= 20;
+				this.p.x -= 22;
 				Q.state.set("end",1);
 				this.p.vida = 50;
 				Q.stageScene("winGame",1, { label: "You win!" });
-			} else if (this.p.vida == 0) {
+			} else if (this.p.vida < 0) {
 				Q.state.set("end",1);
 				Q.stageScene("endGame",1, { label: "You Died" });
+				this.p.vida = 0;
 			}
 		}
 	});
@@ -532,13 +539,14 @@ Q.component("defaultEnemy",{
 			}
 
 			else if(collision.obj.isA("Planta")) {
-				this.p.planta = collision.obj;
-				this.p.vy = 0;
-				this.p.vx = 0;
-				this.p.comePlanta = true;
-				this.del('aiBounce');
-				console.log(Q.state.get("insectos"));
-				Q.state.inc("insectos",1);
+				if (Q.state.get("end") == 0){
+					this.p.planta = collision.obj;
+					this.p.vy = 4;
+					this.p.vx = 0;
+					this.p.comePlanta = true;
+					this.del('aiBounce');
+					Q.state.inc("insectos",1);
+				}
 			}
 
 
