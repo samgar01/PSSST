@@ -18,8 +18,8 @@ var Q = window.Q = Quintus()
 		var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
 		var Josefino = stage.insert(new Q.JosefinoRamiro({x:494, y:193}));
 	    var Ramiro = stage.insert(new Q.JosefinoRamiro({x:494, y:296, sheet:"RamiroRight"}));
-		//var avispaAmarilla = stage.insert(new Q.AvispaBertoldo({x:100, y:77}))
-		//var avispa = stage.insert(new Q.AvispaBertoldo({x:150, y:77, sprite:"AvispaMorada", sheet:"AvispaMoradaLeft"}))
+		var avispaAmarilla = stage.insert(new Q.AvispaBertoldo({x:100, y:77}))
+		var avispa = stage.insert(new Q.AvispaBertoldo({x:150, y:77, sprite:"Avispa-Bertoldo", sheet:"AvispaMoradaLeft"}))
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
 		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
@@ -258,7 +258,7 @@ var Q = window.Q = Quintus()
 		init: function(p) {
 			this._super(p, {
 				sheet: "AvispaAmarillaRight",
-				sprite: "AvispaBertoldo",
+				sprite: "Avispa-Bertoldo",
 				frame: 0,
 				gravity: 0,
 				//vx: 100,
@@ -299,6 +299,11 @@ var Q = window.Q = Quintus()
 		moveR: { frames: [0,1], rate: 1/4, flip: "x"}
 	});
 
+
+	Q.animations('AvispaBertoldo', {
+		moveL: { frames: [0,1], rate: 1/4, loop: true, flip:false},
+		moveR: { frames: [0,1], rate: 1/4, flip: "x"}
+	});
 
 
 	/* ---------------------------- Josefino --------------------------------- */
@@ -499,11 +504,11 @@ var Q = window.Q = Quintus()
 		Q.stageScene("mainTitle");
 	});
 
-	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","Avispa-Bertoldo.png","balaBertoldo.PNG","balaGusano.PNG","balaJosefino.png","Josefino.png","Ramiro.png","Sprays.png","AvispaBertoldo.json","BalaBertoldo.json","BalaGusano.json","BalaJosefino.json","GusanoAzul.json","GusanoVerde.json","Josefino.json","Ramiro.json","Sprays.json","manolo.json","Regadera.png","Plant.png","PlantFlower.png","menu.png","maintitle.png","balas.png", "Balas.json"], function() {
+	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","Avispa-Bertoldo.png","balaBertoldo.PNG","balaGusano.PNG","balaJosefino.png","Josefino.png","Ramiro.png","Sprays.png","Avispa-Bertoldo.json","BalaBertoldo.json","BalaGusano.json","BalaJosefino.json","GusanoAzul.json","GusanoVerde.json","Josefino.json","Ramiro.json","Sprays.json","manolo.json","Regadera.png","Plant.png","PlantFlower.png","menu.png","maintitle.png","balas.png", "Balas.json"], function() {
 		Q.compileSheets("manolo.png","manolo.json");
 		Q.compileSheets("GusanoAzul.png","GusanoAzul.json");
 		Q.compileSheets("GusanoVerde.png","GusanoVerde.json");
-		Q.compileSheets("Avispa-Bertoldo.png","AvispaBertoldo.json");
+		Q.compileSheets("Avispa-Bertoldo.png","Avispa-Bertoldo.json");
 		Q.compileSheets("balaBertoldo.PNG","BalaBertoldo.json");
 		Q.compileSheets("balaGusano.PNG","BalaGusano.json");
 		Q.compileSheets("balaJosefino.png","BalaJosefino.json");
