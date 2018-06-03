@@ -2,16 +2,18 @@ var game = function() {
 // Set up an instance of the Quintus engine and include
 // the Sprites, Scenes, Input and 2D module. The 2D module
 // includes the `TileLayer` class as well as the `2d` componet.
-var Q = window.Q = Quintus()
+var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	.include("Audio, Sprites, Scenes, Input, Touch, UI, Anim, TMX, 2D")
 	.setup({width: 544, // Set the default width to 320 pixels
 			height: 544, // Set the default height to 480 pixels
 			})
 	// And turn on default input controls and touch input (for UI)
-	.controls(true).touch();
+	.controls(true).touch().enableSound();
 
 /*----------------------------------LEVEL1---------------------------------------*/
 	Q.scene("level1",function(stage) {
+		Q.audio.stop();
+		Q.audio.play('fondo.mp3',{ loop: true });
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
 		var GusanoAzul = stage.insert(new Q.Gusano({x:50,y:50}));
@@ -34,6 +36,8 @@ var Q = window.Q = Quintus()
 	});
 
 	Q.scene('mainTitle',function(stage) {
+	  Q.audio.stop();
+		Q.audio.play('intro.mp3',{ loop: true });
 	  var box = stage.insert(new Q.UI.Container({
 	    x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
 	  }));
@@ -82,6 +86,8 @@ var Q = window.Q = Quintus()
 			this.add('2d, stepControls, animation');
 
 			this.on("destroyManolo", function() {
+				Q.audio.stop();
+				Q.audio.play('muerte_manolo.mp3',{ loop: false });
 				this.del("stepControls");
 				this.p.dead = true;
 				this.p.vx = 0;
@@ -148,10 +154,12 @@ var Q = window.Q = Quintus()
 				if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "R" && this.p.fire < 0){
 					this.p.stage.insert(new Q.Balas({x:this.p.x + 66, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo: this.p.disparo}));
 					this.p.fire= this.p.timeFire;
+				  Q.audio.play('spray.mp3',{ loop: false });
 				}
 				else if(this.p.disparo && Q.inputs['fire'] && this.p.direccion == "L" && this.p.fire < 0){
 					this.p.stage.insert(new Q.Balas({x:this.p.x - 66, y:this.p.y, sheet:this.p.disparo + this.p.direccion, direccion:this.p.direccion, tipo : this.p.disparo}));
 					this.p.fire= this.p.timeFire;
+				  Q.audio.play('spray.mp3',{ loop: false });
 				}
 			} else {
 				this.del("stepControls");
@@ -373,6 +381,7 @@ var Q = window.Q = Quintus()
 				console.log("tipo enemigo:" + collision.obj.p.tipo + "tipo sprite: " + this.p.tipo);
 				if(collision.obj.p.tipo==this.p.tipo){
 					console.log(Q.state.get("insectos"));
+					Q.audio.play('muerte_bicho.mp3',{ loop: false });
 					if (collision.obj.p.comePlanta) {
 						Q.state.dec("insectos",1);
 					}
@@ -504,7 +513,7 @@ var Q = window.Q = Quintus()
 		Q.stageScene("mainTitle");
 	});
 
-	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","Avispa-Bertoldo.png","balaBertoldo.PNG","balaGusano.PNG","balaJosefino.png","Josefino.png","Ramiro.png","Sprays.png","Avispa-Bertoldo.json","BalaBertoldo.json","BalaGusano.json","BalaJosefino.json","GusanoAzul.json","GusanoVerde.json","Josefino.json","Ramiro.json","Sprays.json","manolo.json","Regadera.png","Plant.png","PlantFlower.png","menu.png","maintitle.png","balas.png", "Balas.json"], function() {
+	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","Avispa-Bertoldo.png","balaBertoldo.PNG","balaGusano.PNG","balaJosefino.png","Josefino.png","Ramiro.png","Sprays.png","Avispa-Bertoldo.json","BalaBertoldo.json","BalaGusano.json","BalaJosefino.json","GusanoAzul.json","GusanoVerde.json","Josefino.json","Ramiro.json","Sprays.json","manolo.json","Regadera.png","Plant.png","PlantFlower.png","menu.png","maintitle.png","balas.png", "Balas.json", "muerte_manolo.mp3","intro.mp3", "fondo.mp3", "muerte_bicho.mp3", "spray.mp3"], function() {
 		Q.compileSheets("manolo.png","manolo.json");
 		Q.compileSheets("GusanoAzul.png","GusanoAzul.json");
 		Q.compileSheets("GusanoVerde.png","GusanoVerde.json");
