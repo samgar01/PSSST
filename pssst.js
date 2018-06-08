@@ -33,6 +33,11 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		Q.audio.play('fondo.mp3',{ loop: true });
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
+		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
+		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
+		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
+		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
+		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
 		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec:25, estanteria: enemiesPos.l_4}));
 		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec: 10, estanteria: enemiesPos.l_3}));
 		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec: 26, estanteria: enemiesPos.l_2}));
@@ -41,11 +46,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 1, tipoEnemigo: "Gusano", frec: 3, estanteria: enemiesPos.r_3}));
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 1, tipoEnemigo: "Gusano", frec: 2, estanteria: enemiesPos.r_2}));
 		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec: 7, estanteria: enemiesPos.r_1}));
-		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
-		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
-		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
-		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
-		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
 
 		//var GusanoAzul = stage.insert(new Q.Gusano({x:50,y:50}));
 		//var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
@@ -130,18 +130,19 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	});
 
 	Q.scene('mainTitle',function(stage) {
-		var seleccionado = "play";
-	  Q.audio.stop();
-		Q.audio.play('intro.mp3',{ loop: true });
-	  stage.insert(new Q.Repeater({ asset: "maintitle.png", speedX: 0, speedY: 0, type: 0 }));
+	  var seleccionado = "play";
+      Q.audio.stop();
+	  Q.audio.play('intro.mp3',{ loop: true });
+
+	  stage.insert(new Q.Repeater({ asset: "maintitle.png", speedX:0, speedY:0, repeatX: false, repeatY: false, x:0, y: 38, type: 0, scale: 1.24 }));
 
 	  var box = stage.insert(new Q.UI.Container({
 	    x: Q.width/2, y: Q.height/2, fill: "rgba(0,0,0,0.5)"
 	  }));
 
-	  var buttonPlay = box.insert(new Q.UI.Button({ label: "Jugar", x: 10, y: 10, scale: 1.5, fill: "#C97FE5", border: 1, shadow: 10, shadowColor: "#000000" }));
+	  var buttonPlay = box.insert(new Q.UI.Button({ label: "Jugar", font:"400 24px robo", h:50, w:100, x: 10, y: 10, scale: 1.5, fill: "#C97FE5", border: 1, shadow: 10, shadowColor: "#000000" }));
 
-		var buttonCredit = box.insert(new Q.UI.Button({ label: "Créditos", x: 10, y: 100, scale: 1.5, fill: "#7F03AD", border: 1, shadow: 0, shadowColor: "#000000" }));
+		var buttonCredit = box.insert(new Q.UI.Button({ label: "Creditos",font:"400 24px robo", h:50, w:140, x: 10, y: 100, scale: 1.5, fill: "#7F03AD", border: 1, shadow: 0, shadowColor: "#000000" }));
 
 	  Q.input.keyboardControls({
 			ENTER: "start"
@@ -154,6 +155,9 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		    Q.stageScene("level1");
 	  	}
 	  	else if(seleccionado == "creditos"){
+	  		seleccionado = null;
+	  		Q.clearStages();
+	  		Q.stageScene("credits");
 	  	}
 	  });
 
@@ -206,6 +210,48 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	    Q.stageScene('level1');
 	  });
 
+	  buttonCredit.on("click",function() {
+	    Q.clearStages();
+	    Q.stageScene('credits');
+	  });
+	});
+
+
+	Q.scene('credits',function(stage) {
+	  stage.insert(new Q.Repeater({ asset: "backgroundCredits.png", speedX:0, speedY:0, repeatX: false, repeatY: false, x:0, y: 38, type: 0, scale: 1.24 }));
+
+	  var boxTitle = stage.insert(new Q.UI.Container({
+	    x: Q.width/2, y: Q.height-Q.height+17, fill: "rgba(0,0,0,0.5)"
+	  }));
+
+	  var boxText = stage.insert(new Q.UI.Container({
+	    x: Q.width/2, y: (Q.height/2)-100, fill: "rgba(0,0,0,0.5)"
+	  }));
+
+	  var boxBack = stage.insert(new Q.UI.Container({
+	    x: 50, y: Q.height-50, fill: "rgba(0,0,0,0.5)"
+	  }));
+
+	  var title = boxTitle.insert(new Q.UI.Text({ label: "Creditos", x: 0, y: 0, color: "white", family:"robo", size: 42}));
+
+	  var text = boxText.insert(new Q.UI.Text({ label: "Este videojuego ha sido desarrollado por \n Daniel Fernández Carnero, \nMarco González Pérez y \nSamuel Javier García Moreno.", x:0, y:0,color:"white", size:18}))
+
+	  var buttonBack = boxBack.insert(new Q.UI.Button({ label: "Volver", font:"400 18px robo", h:30, w:80, x: 10, y: 10, scale: 1, fill: "#C97FE5", border: 1, shadow: 2, shadowColor: "#ffffff" }));
+
+	  Q.input.keyboardControls({
+			ENTER: "start"
+		});
+
+	  Q.input.on("start",this, function(){
+		    Q.clearStages();
+		    Q.stageScene("mainTitle");
+	  });
+
+	  buttonBack.on("click",function() {
+	    Q.clearStages();
+	    Q.stageScene('mainTitle');
+	  });
+
 	});
 
 
@@ -232,11 +278,11 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 			if(this.p.currentTime > this.p.frec && this.p.bichosGenerados < this.p.numMaxEnemigos){
 				this.p.bichosGenerados++;
 				this.p.currentTime = 0;
-				if (this.p.tipoEnemigo == "Gusano") 
+				if (this.p.tipoEnemigo == "Gusano")
 					this.p.stage.insert(new Q.Gusano({x:this.p.estanteria.x,y:this.p.estanteria.y}));
-				else if(this.p.tipoEnemigo == "JosefinoRamiro") 
+				else if(this.p.tipoEnemigo == "JosefinoRamiro")
 					this.p.stage.insert(new Q.JosefinoRamiro({x:this.p.estanteria.x,y:this.p.estanteria.y}));
-				else if(this.p.tipoEnemigo == "AvispaBertoldo") 
+				else if(this.p.tipoEnemigo == "AvispaBertoldo")
 					this.p.stage.insert(new Q.AvispaBertoldo({x:this.p.estanteria.x,y:this.p.estanteria.y}));
 			}
 			//console.log(enemiesPos.l_4);
@@ -659,10 +705,12 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 					console.log(Q.state.get("currentLevel"));
 					Q.stageScene('nextLevel',1, { label: "Next level!" });
 				}
-				else 
+				else
 					Q.stageScene("winGame",1, { label: "You win!" });
-				
+
 			} else if (this.p.vida < 0) {
+				Q.audio.stop();
+  				Q.audio.play('muerte_manolo.mp3',{ loop: false });
 				Q.state.set("end",1);
 				Q.stageScene("endGame",1, { label: "You Died" });
 				this.p.vida = 0;
@@ -729,7 +777,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		Q.stageScene("mainTitle");
 	});
 
-	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","Avispa-Bertoldo.png","balaBertoldo.PNG","balaGusano.PNG","balaJosefino.png","Josefino.png","Ramiro.png","Sprays.png","Avispa-Bertoldo.json","BalaBertoldo.json","BalaGusano.json","BalaJosefino.json","GusanoAzul.json","GusanoVerde.json","Josefino.json","Ramiro.json","Sprays.json","manolo.json","Regadera.png","Plant.png","PlantFlower.png","menu.png","maintitle.png","balas.png", "Balas.json", "muerte_manolo.mp3","intro.mp3", "fondo.mp3", "muerte_bicho.mp3", "spray.mp3"], function() {
+	Q.load(["manolo.png","GusanoAzul.png","GusanoVerde.png","Avispa-Bertoldo.png","balaBertoldo.PNG","balaGusano.PNG","balaJosefino.png","Josefino.png","Ramiro.png","Sprays.png","Avispa-Bertoldo.json","BalaBertoldo.json","BalaGusano.json","BalaJosefino.json","GusanoAzul.json","GusanoVerde.json","Josefino.json","Ramiro.json","Sprays.json","manolo.json","Regadera.png","Plant.png","PlantFlower.png","menu.png","maintitle.png","backgroundCredits.png","balas.png", "Balas.json", "muerte_manolo.mp3","intro.mp3", "fondo.mp3", "muerte_bicho.mp3", "spray.mp3"], function() {
 		Q.compileSheets("manolo.png","manolo.json");
 		Q.compileSheets("GusanoAzul.png","GusanoAzul.json");
 		Q.compileSheets("GusanoVerde.png","GusanoVerde.json");
@@ -746,6 +794,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		Q.sheet("Plant","Plant.png", { tilew: 119, tileh: 261});
 		Q.sheet("PlantFlower","PlantFlower.png", { tilew: 172, tileh: 287});
 		Q.sheet("mainTitle","maintitle.png");
+		Q.sheet("backgroundCredits","backgroundCredits.png");
 	});
 
 /*---------------------------------COMPONENTE DEFAULTENEMY-----------------------------------*/
