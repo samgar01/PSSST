@@ -10,23 +10,48 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	// And turn on default input controls and touch input (for UI)
 	.controls(true).touch().enableSound();
 
+
+/*enemiesPos es una variable que guarda en que pixeles se tiene que pintar los enemigos en las distintas estanterias, siendo 0 la mas bajita y 4 la más alta y l señala la izquierda y r la derecha */
+	var enemiesPos = {
+  l_0:   { x: 64.5,   y: 492.5},
+  l_1:   { x: 64.5,   y: 390.5},
+  l_2:   { x: 64.5,   y: 288.5},
+  l_3:   { x: 64.5,   y: 186.5},
+  l_4:   { x: 64.5,   y: 84.5},
+  r_0:   { x: 479.5,   y: 492.5},
+  r_1:   { x: 479.5,   y: 390.5},
+  r_2:   { x: 479.5,   y: 288.5},
+  r_3:   { x: 479.5,   y: 186.5},
+  r_4:   { x: 479.5,   y: 84.5}
+};
+
 /*----------------------------------LEVEL1---------------------------------------*/
 	Q.scene("level1",function(stage) {
 		Q.audio.stop();
 		Q.audio.play('fondo.mp3',{ loop: true });
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
-		var GusanoAzul = stage.insert(new Q.Gusano({x:50,y:50}));
-		var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
-		var Josefino = stage.insert(new Q.JosefinoRamiro({x:494, y:193}));
-	    var Ramiro = stage.insert(new Q.JosefinoRamiro({x:494, y:296, sheet:"RamiroRight"}));
-		var avispaAmarilla = stage.insert(new Q.AvispaBertoldo({x:100, y:77}))
-		var avispa = stage.insert(new Q.AvispaBertoldo({x:150, y:77, sprite:"Avispa-Bertoldo", sheet:"AvispaMoradaLeft"}))
+		console.log(enemiesPos.l_4);
+		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec:25, estanteria: enemiesPos.l_4}));
+		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec: 10, estanteria: enemiesPos.l_3}));
+		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec: 26, estanteria: enemiesPos.l_2}));
+		var spawner4 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec: 18, estanteria: enemiesPos.l_1}));
+		var spawner5 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec: 10, estanteria: enemiesPos.r_4}));
+		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 1, tipoEnemigo: "Gusano", frec: 3, estanteria: enemiesPos.r_3}));
+		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 1, tipoEnemigo: "Gusano", frec: 2, estanteria: enemiesPos.r_2}));
+		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMaxEnemigos: 2, tipoEnemigo: "Gusano", frec: 7, estanteria: enemiesPos.r_1}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
 		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
 		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
+
+		//var GusanoAzul = stage.insert(new Q.Gusano({x:50,y:50}));
+		//var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
+		//var Josefino = stage.insert(new Q.JosefinoRamiro({x:494, y:193}));
+	  //var Ramiro = stage.insert(new Q.JosefinoRamiro({x:494, y:296, sheet:"RamiroRight"}));
+		//var avispaAmarilla = stage.insert(new Q.AvispaBertoldo({x:100, y:77}))
+		//var avispa = stage.insert(new Q.AvispaBertoldo({x:150, y:77, sprite:"Avispa-Bertoldo", sheet:"AvispaMoradaLeft"}))
 
 		Q.state.set("end",0);
 
@@ -115,6 +140,42 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	});
 
 
+
+	Q.Sprite.extend("Spawner", {
+		init: function(p) {
+			this._super(p, {
+				sheet: "",
+				sprite: "",
+				estanteria: enemiesPos.l_4,
+				currentTime: 0,
+				bichosGenerados:0
+			});
+
+
+			this.add('2d');
+
+
+
+		},
+
+		step: function(dt) {
+			this.p.currentTime +=dt;
+			if(this.p.currentTime > this.p.frec && this.p.bichosGenerados < this.p.numMaxEnemigos){
+				this.p.bichosGenerados++;
+				this.p.currentTime = 0;
+				if (this.p.tipoEnemigo == "Gusano") 
+					this.p.stage.insert(new Q.Gusano({x:this.p.estanteria.x,y:this.p.estanteria.y}));
+				else if(this.p.tipoEnemigo == "JosefinoRamiro") 
+					this.p.stage.insert(new Q.JosefinoRamiro({x:this.p.estanteria.x,y:this.p.estanteria.y}));
+				else if(this.p.tipoEnemigo == "AvispaBertoldo") 
+					this.p.stage.insert(new Q.AvispaBertoldo({x:this.p.estanteria.x,y:this.p.estanteria.y}));
+			}
+			//console.log(enemiesPos.l_4);
+		},
+
+
+	});
+
 	/*--------------------------------- MANOLO -----------------------------------------*/
 
 	Q.Sprite.extend("Manolo",{
@@ -185,6 +246,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		},
 		step: function(dt) {
 			this.p.fire-=dt;
+
 			if (Q.state.get("end") == 0) {
 				// console.log(this.p.disparo + this.p.direccion);
 				if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) {
