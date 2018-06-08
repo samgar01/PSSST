@@ -163,24 +163,26 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 
 	  Q.input.on("up",this, function(){
 	  	//console.log(seleccionado);
-	  	if(seleccionado == "play"){
-	  		buttonPlay.p.shadow = 0;
-	  		buttonPlay.p.fill = "#7F03AD";
+	  	if (seleccionado != null) {
+	  		if(seleccionado == "play"){
+		  		buttonPlay.p.shadow = 0;
+		  		buttonPlay.p.fill = "#7F03AD";
 
-	  		buttonCredit.p.shadow = 10;
-	  		buttonCredit.p.fill = "#C97FE5";
+		  		buttonCredit.p.shadow = 10;
+		  		buttonCredit.p.fill = "#C97FE5";
 
-	  		seleccionado = "creditos";
-	  	}
-	  	else if(seleccionado == "creditos"){
-	  		buttonCredit.p.shadow = 0;
-	  		buttonCredit.p.fill = "#7F03AD";
+		  		seleccionado = "creditos";
+		  	}
+		  	else if(seleccionado == "creditos"){
+		  		buttonCredit.p.shadow = 0;
+		  		buttonCredit.p.fill = "#7F03AD";
 
-	  		buttonPlay.p.shadow = 10;
-	  		buttonPlay.p.fill = "#C97FE5";
+		  		buttonPlay.p.shadow = 10;
+		  		buttonPlay.p.fill = "#C97FE5";
 
-	  		seleccionado = "play"
-	  	}
+		  		seleccionado = "play"
+		  	}
+		}
 	  });
 
 	  Q.input.on("down",this, function(){
@@ -212,7 +214,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  });
 
 	  buttonCredit.on("click",function() {
-	  	seleccionado = null;
+	    seleccionado = null;
 	    Q.clearStages();
 	    Q.stageScene('credits');
 	  });
@@ -240,18 +242,8 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 
 	  var buttonBack = boxBack.insert(new Q.UI.Button({ label: "Volver", font:"400 18px robo", h:30, w:80, x: 10, y: 10, scale: 1, fill: "#C97FE5", border: 1, shadow: 2, shadowColor: "#ffffff" }));
 
-	  Q.input.keyboardControls({
-			ENTER: "start"
-		});
-
-	  Q.input.on("start",this, function(){
-	  	seleccionado = null;
-		    Q.clearStages();
-		    Q.stageScene("mainTitle");
-	  });
 
 	  buttonBack.on("click",function() {
-	  	seleccionado = null;
 	    Q.clearStages();
 	    Q.stageScene('mainTitle');
 	  });
