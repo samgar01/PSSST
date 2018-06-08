@@ -206,11 +206,13 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 
 
 	  buttonPlay.on("click",function() {
+	  	seleccionado = null;
 	    Q.clearStages();
 	    Q.stageScene('level1');
 	  });
 
 	  buttonCredit.on("click",function() {
+	  	seleccionado = null;
 	    Q.clearStages();
 	    Q.stageScene('credits');
 	  });
@@ -243,11 +245,13 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		});
 
 	  Q.input.on("start",this, function(){
+	  	seleccionado = null;
 		    Q.clearStages();
 		    Q.stageScene("mainTitle");
 	  });
 
 	  buttonBack.on("click",function() {
+	  	seleccionado = null;
 	    Q.clearStages();
 	    Q.stageScene('mainTitle');
 	  });
@@ -813,7 +817,7 @@ Q.component("defaultEnemy",{
 
 	extend:{
 		collision: function(collision) {
-			if(collision.obj.isA("Manolo")) {
+			if(collision.obj.isA("Manolo") && Q.state.get("end")==0) {
 				collision.obj.trigger("destroyManolo");
 			}
 
