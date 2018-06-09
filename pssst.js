@@ -80,7 +80,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
 		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 7, estanteria: enemiesPos.r_1}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
-		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
 		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
@@ -116,7 +115,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
 		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 4, tipoEnemigo: "JosefinoRamiro", frec: 7, estanteria: enemiesPos.r_1}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
-		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
 		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
@@ -143,7 +141,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
-		var regadera = stage.insert(new Q.Regadera({x:53 ,y:185}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
 		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
@@ -480,6 +477,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				vy: -20,
 				tipo: "Gusano",
 				planta: null,
+				type: Q.SPRITE_ENEMY,
 				comePlanta: false
 			});
 
@@ -554,6 +552,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				vy: 0,
 				tipo: "Avispa",
 				planta: null,
+				type: Q.SPRITE_ENEMY,
 				comePlanta: false/*,
 				xDest: 222.5,
 				yDest: 490.5*/
@@ -610,6 +609,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				currentTime: 0,
 				tipo: "Josefino",
 				planta: null,
+				type: Q.SPRITE_ENEMY,
 				comePlanta: false
 			});
 
@@ -673,6 +673,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 						Q.state.dec("insectos",1);
 					}
 					collision.obj.destroy();
+					this.destroy();
 				}
 				else
 					this.destroy();
