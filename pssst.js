@@ -27,6 +27,31 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
   r_4:   { x: 479.5,   y: 84.5}
 };
 
+/*----------------------------------HUD------------------------------------------*/
+	Q.scene("HUD",function(stage) {
+		var level = stage.insert(new Q.Score());
+	});
+
+	Q.UI.Text.extend("Score",{
+		init: function(p) {
+			this._super({
+				x:70,
+				y: 5,
+				currentLevel: 1,
+				label: "Level 1",
+				color: "white",
+				family: "ROBO",
+				shadow: 5,
+				shadowColor: "#000000"
+			});
+
+		},
+		step: function(dt) {
+			this.p.currentLevel = Q.state.get("currentLevel");
+			this.p.label = "Level " + this.p.currentLevel;
+		}
+	});
+
 /*----------------------------------LEVEL1---------------------------------------*/
 	Q.scene("level1",function(stage) {
 		Q.audio.stop();
@@ -195,6 +220,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  	if(seleccionado == "play"){
 	  		seleccionado = null;
 		    Q.clearStages();
+		    Q.stageScene('HUD',1);
 		    Q.stageScene("level1");
 	  	}
 	  	else if(seleccionado == "creditos"){
@@ -253,6 +279,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  buttonPlay.on("click",function() {
 	  	seleccionado = null;
 	    Q.clearStages();
+	    Q.stageScene('HUD',1);
 	    Q.stageScene('level1');
 	  });
 
@@ -564,7 +591,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		},
 
 		step: function(p) {
-			
+
 			if(this.p.x >= 272){
 				this.p.vy = 60
 			}
@@ -810,6 +837,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	    Q.state.inc("currentLevel",1);
 			var nextLevel = "level" + Q.state.get("currentLevel");
 			console.log(nextLevel);
+		Q.stageScene('HUD',1);
 	    Q.stageScene(nextLevel);
 	  });
 	  box.fit(20);
