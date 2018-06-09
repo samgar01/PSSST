@@ -59,9 +59,9 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
-		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
-		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
-		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
+		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:275.5}));
+		var sprayJR = stage.insert(new Q.Spray({x:53, y:377.5,sheet:"Josefino"}));
+		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:479.5,sheet:"Avispa"}));
 		var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.l_4}));
 		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Gusano", frec:2, estanteria: enemiesPos.l_4}));
 		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 6, estanteria: enemiesPos.l_3}));
@@ -105,9 +105,9 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
 		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 7, estanteria: enemiesPos.r_1}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
-		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
-		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
-		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
+		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:275.5}));
+		var sprayJR = stage.insert(new Q.Spray({x:53, y:377.5,sheet:"Josefino"}));
+		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:479.5,sheet:"Avispa"}));
 
 		//var GusanoAzul = stage.insert(new Q.Gusano({x:50,y:50}));
 		//var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
@@ -140,9 +140,9 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
 		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 4, tipoEnemigo: "JosefinoRamiro", frec: 7, estanteria: enemiesPos.r_1}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
-		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
-		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
-		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
+		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:275.5}));
+		var sprayJR = stage.insert(new Q.Spray({x:53, y:377.5,sheet:"Josefino"}));
+		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:479.5,sheet:"Avispa"}));
 
 		//var GusanoAzul = stage.insert(new Q.Gusano({x:50,y:50}));
 		//var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
@@ -166,9 +166,9 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
-		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:293}));
-		var sprayJR = stage.insert(new Q.Spray({x:53, y:396,sheet:"Josefino"}));
-		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:499,sheet:"Avispa"}));
+		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:275.5}));
+		var sprayJR = stage.insert(new Q.Spray({x:53, y:377.5,sheet:"Josefino"}));
+		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:479.5,sheet:"Avispa"}));
 		var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.l_4}));
 		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec:2, estanteria: enemiesPos.l_4}));
 		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "AvispaBertoldo", frec: 15, estanteria: enemiesPos.l_3}));
@@ -351,7 +351,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				else if(this.p.tipoEnemigo == "AvispaBertoldo")
 					this.p.stage.insert(new Q.AvispaBertoldo({x:this.p.estanteria.x,y:this.p.estanteria.y}));
 				else if(this.p.tipoEnemigo == "Regadera")
-					this.p.stage.insert(new Q.Regadera({x:this.p.estanteria.x,y:this.p.estanteria.y}));
+					this.p.stage.insert(new Q.Regadera({x:this.p.estanteria.x,y:this.p.estanteria.y-13}));
 			}
 
 			//console.log(enemiesPos.l_4);
@@ -394,32 +394,23 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				this.reset();
 			});
 
-
-			// Add in pre-made components to get up and running quickly
-			// The `2d` component adds in default 2d collision detection
-			// and kinetics (velocity, gravity)
-			// The `platformerControls` makes the player controllable by the
-			// default input actions (left, right to move, up or action to jump)
-			// It also checks to make sure the player is on a horizontal surface before
-			// letting them jump.
-
-			// Write event handlers to respond hook into behaviors.
-			// hit.sprite is called everytime the player collides with a sprite
-
 			this.on("bump.left,bump.right,bump.bottom,bump.top",function(collision) {
 
-				if(collision.obj.isA("Spray")){
+				if(collision.obj.isA("Spray") && !this.p.disparo){
 					if(collision.obj.p.sheet =="Gusano"){
 						this.p.disparo = "Gusano";
 						this.play("GusanoL");
+						collision.obj.destroy();
 					}
 					else if(collision.obj.p.sheet =="Josefino"){
 						this.p.disparo = "Josefino";
 						this.play("JosefinoL");
+						collision.obj.destroy();
 					}
 					else if(collision.obj.p.sheet =="Avispa"){
 						this.p.disparo = "Avispa";
 						this.play("AvispaL");
+						collision.obj.destroy();
 					}
 				}
 				else if(collision.obj.isA("Regadera")){
@@ -465,6 +456,49 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 					this.p.fire= this.p.timeFire;
 				  Q.audio.play('spray.mp3',{ loop: false });
 				}
+				/*---Llegar a huecos de los lados---*/
+				/*	  l_0:   { x: 64.5,   y: 492.5},
+					  l_1:   { x: 64.5,   y: 390.5},
+					  l_2:   { x: 64.5,   y: 288.5},
+					  l_3:   { x: 64.5,   y: 186.5},
+					  l_4:   { x: 64.5,   y: 84.5},
+					  r_0:   { x: 479.5,   y: 492.5},
+					  r_1:   { x: 479.5,   y: 390.5},
+					  r_2:   { x: 479.5,   y: 288.5},
+					  r_3:   { x: 479.5,   y: 186.5},
+					  r_4:   { x: 479.5,   y: 84.5}
+				y: 71.5,173.5,275.5,377.5,481.5
+				x: 53, Q.width-53*/
+				if (this.p.disparo && this.p.x < 89.5) {
+					this.p.x = 115.5;
+					if (this.p.y < 121.5) {
+						this.p.stage.insert(new Q.Spray({x:53, y:71.5,sheet:this.p.disparo}));
+					} else if (this.p.y < 223.5) {
+						this.p.stage.insert(new Q.Spray({x:53, y:173.5,sheet:this.p.disparo}));
+					} else if (this.p.y < 325.5) {
+						this.p.stage.insert(new Q.Spray({x:53, y:275.5,sheet:this.p.disparo}));
+					} else if (this.p.y < 427.5) {
+						this.p.stage.insert(new Q.Spray({x:53, y:377.5,sheet:this.p.disparo}));
+					} else if (this.p.y < 531.5) {
+						this.p.stage.insert(new Q.Spray({x:53, y:481.5,sheet:this.p.disparo}));
+					}
+					this.p.disparo = false;
+				} else if (this.p.disparo && this.p.x > 454.5) {
+					this.p.x = Q.width-115.5;
+					if (this.p.y < 121.5) {
+						this.p.stage.insert(new Q.Spray({x:Q.width-53, y:71.5,sheet:this.p.disparo}));
+					} else if (this.p.y < 223.5) {
+						this.p.stage.insert(new Q.Spray({x:Q.width-53, y:173.5,sheet:this.p.disparo}));
+					} else if (this.p.y < 325.5) {
+						this.p.stage.insert(new Q.Spray({x:Q.width-53, y:275.5,sheet:this.p.disparo}));
+					} else if (this.p.y < 427.5) {
+						this.p.stage.insert(new Q.Spray({x:Q.width-53, y:377.5,sheet:this.p.disparo}));
+					} else if (this.p.y < 531.5) {
+						this.p.stage.insert(new Q.Spray({x:Q.width-53, y:481.5,sheet:this.p.disparo}));
+					}
+					this.p.disparo = false;
+				}
+
 			} else {
 				this.del("stepControls");
 				this.del("animation");
