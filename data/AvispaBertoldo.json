@@ -1,6 +1,6 @@
 {
-	"AvispaAmarillaLeft":{"sx":0,"sy":0,"tileW":62,"tileH":59,"frames":2},
 	"AvispaAmarillaRight":{"sx":125,"sy":0,"tileW":62,"tileH":59,"frames":2},
+	"AvispaAmarillaLeft":{"sx":0,"sy":0,"tileW":62,"tileH":59,"frames":2},
 	"AvispaMoradaRight":{"sx":373,"sy":0,"tileW":62,"tileH":59,"frames":2},
 	"AvispaMoradaLeft":{"sx":249,"sy":0,"tileW":62,"tileH":59,"frames":2}
 }
