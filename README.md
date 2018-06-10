@@ -28,12 +28,21 @@ Se puede usar un spray de un tipo contra los insectos de otro tipo para evadirle
     
 
 Robbie (Manolo): robot protagonista.
+![alt text](https://github.com/danfer09/PSSST/blob/master/images/manolo.png)
 
 Gusanos: insectos con esta apariencia de color verde y azul.
 
-Parásitos: de color rojo y azul.
+![alt text](https://github.com/danfer09/PSSST/blob/master/images/GusanoAzul.png)
+
+![alt text](https://github.com/danfer09/PSSST/blob/master/images/GusanoVerde.png)
+
+Parásitos: de color azul.
+
+![alt text](https://github.com/danfer09/PSSST/blob/master/images/Josefino.png)
 
 Avispas: insectos con esta apariencia de color amarillo y morado.
+![alt text](https://github.com/danfer09/PSSST/blob/master/images/Avispa-Bertoldo.png)
+
 
 ## II. Diseño de la implementación
 
