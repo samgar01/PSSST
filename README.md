@@ -41,12 +41,16 @@ Parásitos: de color azul.
 ![alt text](https://github.com/danfer09/PSSST/blob/master/images/Josefino.png)
 
 Avispas: insectos con esta apariencia de color amarillo y morado.
-![alt text](https://github.com/danfer09/PSSST/blob/master/images/Avispa-Bertoldo.png)
+
+![alt text](https://github.com/danfer09/PSSST/blob/master/images/AvispaBertoldo.png)
 
 
 ## II. Diseño de la implementación
 
-    
+![alt text](https://github.com/danfer09/PSSST/blob/master/images/Captura.PNG)
+
+
+
 
 
 Para desarrollar este juego hemos hecho uso de todos los conocimientos adquiridos durante el curso de la asignatura, sobre todo de las prácticas 2 y 3. Nuestra hoja de ruta ha sido seguir un flujo similar al que se describe en los enunciados de estas, y hemos acudido al código de las prácticas en numerosas ocasiones para ayudarnos. Hemos utilizado el motor Quintus que permite que el juego se desarrolle por completo dentro de un canvas. Por cada personaje, hemos creado una clase que extiende de Q.Sprite, que tiene, como mínimo, la función init para inicializar propiedades y step para movimientos y eventos durante el juego.
@@ -111,8 +115,10 @@ https://upload.wikimedia.org/wikipedia/en/2/25/Pssst-intro.png
 
 Sprites del juego:
 
- 
-Capturas del video: [https://www.youtube.com/watch?v=SdBhzG7FQ8Q](https://www.youtube.com/watch?v=SdBhzG7FQ8Q)
+- Versiones remasterizadas del juego encontradas en internet
+
+- Capturas del video: 
+[https://www.youtube.com/watch?v=SdBhzG7FQ8Q](https://www.youtube.com/watch?v=SdBhzG7FQ8Q)
 
   
   

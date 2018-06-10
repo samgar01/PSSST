@@ -63,15 +63,11 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:479.5,sheet:"Avispa"}));
 		var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.l_4}));
 		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 6, estanteria: enemiesPos.l_3}));
-		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 26, estanteria: enemiesPos.l_2}));
-		var spawner4 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 18, estanteria: enemiesPos.l_1}));
-		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Gusano", frec: 3, estanteria: enemiesPos.r_3}));
-		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Gusano", frec: 2, estanteria: enemiesPos.r_2}));
-		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 7, estanteria: enemiesPos.r_1}));
-		var spawner9 = stage.insert(new Q.Spawner({stage:stage, numMax: 10, tipoEnemigo: "Gusano", frec: 10, estanteria: enemiesPos.r_4}));
-		var spawner10 = stage.insert(new Q.Spawner({stage:stage, numMax: 10, tipoEnemigo: "Gusano", frec: 15, estanteria: enemiesPos.l_3}));
-		var spawner11 = stage.insert(new Q.Spawner({stage:stage, numMax: 6, tipoEnemigo: "Gusano", frec: 13, estanteria: enemiesPos.r_0}));
-		var spawner12 = stage.insert(new Q.Spawner({stage:stage, numMax: 6, tipoEnemigo: "Gusano", frec: 15, estanteria: enemiesPos.l_0}));
+		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMax: 10, tipoEnemigo: "Gusano", frec: 26, estanteria: enemiesPos.l_2}));
+		var spawner4 = stage.insert(new Q.Spawner({stage:stage, numMax: 10, tipoEnemigo: "Gusano", frec: 18, estanteria: enemiesPos.l_1}));
+		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMax: 3, tipoEnemigo: "Gusano", frec: 7, estanteria: enemiesPos.r_3}));
+		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 5, estanteria: enemiesPos.r_2}));
+		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Gusano", frec: 7, estanteria: enemiesPos.r_1}));
 
 		Q.state.set("end",0);
 
@@ -90,14 +86,16 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
 		var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.r_4}));
-		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec:25, estanteria: enemiesPos.l_4}));
-		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 10, estanteria: enemiesPos.l_3}));
-		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 26, estanteria: enemiesPos.l_2}));
-		var spawner4 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 18, estanteria: enemiesPos.l_1}));
-		var spawner5 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 10, estanteria: enemiesPos.r_4}));
+		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec:5, estanteria: enemiesPos.l_4}));
+		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Gusano", frec: 3, estanteria: enemiesPos.l_3}));
+		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMax: 5, tipoEnemigo: "JosefinoRamiro", frec: 35, estanteria: enemiesPos.l_2}));
+		var spawner4 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Gusano", frec: 18, estanteria: enemiesPos.l_1}));
+		var spawner5 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 15, estanteria: enemiesPos.r_4}));
 		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Gusano", frec: 3, estanteria: enemiesPos.r_3}));
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
-		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "Gusano", frec: 7, estanteria: enemiesPos.r_1}));
+		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Gusano", frec: 18, estanteria: enemiesPos.r_1}));
+		var spawner9 = stage.insert(new Q.Spawner({stage:stage, numMax: 4, tipoEnemigo: "JosefinoRamiro", frec: 20, estanteria: enemiesPos.r_3}));
+		var spawner10 = stage.insert(new Q.Spawner({stage:stage, numMax: 4, tipoEnemigo: "JosefinoRamiro", frec: 30, estanteria: enemiesPos.l_3}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:275.5}));
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:377.5,sheet:"Josefino"}));
@@ -119,13 +117,13 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
 		var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.r_4}));
 	  var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec:25, estanteria: enemiesPos.l_4}));
-		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 10, estanteria: enemiesPos.l_3}));
+		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 13, estanteria: enemiesPos.l_3}));
 		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMax: 5, tipoEnemigo: "JosefinoRamiro", frec: 26, estanteria: enemiesPos.l_2}));
 		var spawner4 = stage.insert(new Q.Spawner({stage:stage, numMax: 3, tipoEnemigo: "JosefinoRamiro", frec: 18, estanteria: enemiesPos.l_1}));
-		var spawner5 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 10, estanteria: enemiesPos.r_4}));
-		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMax: 3, tipoEnemigo: "JosefinoRamiro", frec: 3, estanteria: enemiesPos.r_3}));
+		var spawner5 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 17, estanteria: enemiesPos.r_4}));
+		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMax: 3, tipoEnemigo: "JosefinoRamiro", frec: 6, estanteria: enemiesPos.r_3}));
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
-		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 20, tipoEnemigo: "JosefinoRamiro", frec: 5, estanteria: enemiesPos.r_1}));
+		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 20, tipoEnemigo: "JosefinoRamiro", frec: 5, estanteria: enemiesPos.r_3}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:275.5}));
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:377.5,sheet:"Josefino"}));
@@ -153,7 +151,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec:2, estanteria: enemiesPos.l_4}));
 		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "AvispaBertoldo", frec: 15, estanteria: enemiesPos.l_3}));
 		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 26, estanteria: enemiesPos.l_2}));
-		var spawner4 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "AvispaBertoldo", frec: 18, estanteria: enemiesPos.l_1}));
+		var spawner4 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "AvispaBertoldo", frec: 18, estanteria: enemiesPos.l_4}));
 		var spawner5 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 10, estanteria: enemiesPos.r_4}));
 		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMax: 5, tipoEnemigo: "AvispaBertoldo", frec: 20, estanteria: enemiesPos.r_3}));
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
@@ -263,6 +261,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 
 	/*--------------------------------------------CREDITOS-----------------------------------*/
 	Q.scene('credits',function(stage) {
+	  var creditos = true;
 	  stage.insert(new Q.Repeater({ asset: "backgroundCredits.png", speedX:0, speedY:0, repeatX: false, repeatY: false, x:0, y: 38, type: 0, scale: 1.24 }));
 
 	  var boxTitle = stage.insert(new Q.UI.Container({
@@ -278,6 +277,18 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  var title = boxTitle.insert(new Q.UI.Text({ label: "Creditos", x: 0, y: 0, color: "white", family:"robo", size: 42}));
 	  var text = boxText.insert(new Q.UI.Text({ label: "Este videojuego ha sido desarrollado por \n Daniel Fernández Carnero, \nMarco González Pérez y \nSamuel Javier García Moreno.", x:0, y:0,color:"white", size:18}))
 	  var buttonBack = boxBack.insert(new Q.UI.Button({ label: "Volver", font:"400 18px robo", h:30, w:80, x: 10, y: 10, scale: 1, fill: "#C97FE5", border: 1, shadow: 2, shadowColor: "#ffffff" }));
+
+	  Q.input.keyboardControls({
+			ENTER: "start"
+		});
+
+	  Q.input.on("start",this, function(){
+	  	if (creditos) {
+	  		creditos = false;
+	    	Q.clearStages();
+	    	Q.stageScene('mainTitle');
+	  	}
+	  });
 
 	  buttonBack.on("click",function() {
 	    Q.clearStages();
@@ -306,7 +317,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				this.p.generado++;
 				this.p.currentTime = 0;
 				var numAleatorio = Math.floor(Math.random() * (2 - 0)) + 0;
-				console.log(numAleatorio)
 				if (this.p.tipoEnemigo == "Gusano" && numAleatorio)
 					this.p.stage.insert(new Q.Gusano({x:this.p.estanteria.x,y:this.p.estanteria.y}));
 				else if (this.p.tipoEnemigo == "Gusano" && !numAleatorio)
@@ -392,9 +402,9 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 					this.play("walk");
 				else if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo)
 					this.play(this.p.disparo + this.p.direccion);
-				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) 
+				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo)
 					this.play("still");
-				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo) 
+				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo)
 					this.play(this.p.disparo + this.p.direccion + "Still");
 
 				if(Q.inputs['left'])
@@ -496,7 +506,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				this.p.vy= 20;
 			if(this.p.vy == 0 && !this.p.comePlanta)
 				this.p.vy= 20;
-		
+
 
 		},
 	});
@@ -622,7 +632,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 					Q.audio.play('muerte_bicho.mp3',{ loop: false });
 					if (collision.obj.p.comePlanta) {
 						Q.state.dec("insectos",1);
-						console.log("pasa");
 					}
 					collision.obj.destroy();
 					this.destroy();
@@ -674,9 +683,9 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	Q.Sprite.extend("Planta",{
 		init: function(p) {
 			this._super(p, {
-				sheet: "Plant", 
-				x: 272, 
-				y: 475, 
+				sheet: "Plant",
+				x: 272,
+				y: 475,
 				vidaFin: 350,
 				vida: 100,
 				timeT: 0.2,
@@ -715,7 +724,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				Q.state.set("end",1);
 				this.p.vida = 50;
 				if(Q.state.get("currentLevel")< 4){// El 4 es el último nivel implementado, tras el se gana el juego
-					console.log(Q.state.get("currentLevel"));
 					Q.stageScene('nextLevel',1, { label: "Next level!" });
 				}
 				else
@@ -744,10 +752,13 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  var label = box.insert(new Q.UI.Text({x:10, y: -10 - buttonPlay.p.h,  label: stage.options.label }));
 
 	  buttonPlay.on("click",function() {
+	    seleccionado = null;
 	    Q.clearStages();
+	    Q.stageScene('HUD',1);
 	    Q.stageScene('level1');
 	  });
 	  buttonMenu.on("click",function() {
+	    seleccionado = null;
 	    Q.clearStages();
 	    Q.stageScene('mainTitle');
 	  });
@@ -828,10 +839,8 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	                                        label: stage.options.label }));
 	  button.on("click",function() {
 	    Q.clearStages();
-	    console.log("nivel actual: " +  Q.state.get("currentLevel"));
 	    Q.state.inc("currentLevel",1);
 			var nextLevel = "level" + Q.state.get("currentLevel");
-			console.log("siguente nivel: " + nextLevel);
 			Q.stageScene('HUD',1);
 	    Q.stageScene(nextLevel);
 	  });
@@ -844,11 +853,8 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  	if(!yaPulsado){
 	  		yaPulsado = true;
 		    Q.clearStages();
-		    console.log("nivel actual: " +  Q.state.get("currentLevel"));
 		    Q.state.inc("currentLevel",1);
 				var nextLevel = "level" + Q.state.get("currentLevel");
-				console.log("siguente nivel: " + nextLevel);
-				console.log(nextLevel);
 				Q.stageScene('HUD',1);
 		    Q.stageScene(nextLevel);
 	  	}
@@ -926,7 +932,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 						this.p.vx = 0;
 						this.p.comePlanta = true;
 						this.del('aiBounce');
-						console.log("pasa inc");
 						Q.state.inc("insectos",1);
 					}
 				}
