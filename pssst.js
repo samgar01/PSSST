@@ -261,6 +261,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 
 	/*--------------------------------------------CREDITOS-----------------------------------*/
 	Q.scene('credits',function(stage) {
+	  var creditos = true;
 	  stage.insert(new Q.Repeater({ asset: "backgroundCredits.png", speedX:0, speedY:0, repeatX: false, repeatY: false, x:0, y: 38, type: 0, scale: 1.24 }));
 
 	  var boxTitle = stage.insert(new Q.UI.Container({
@@ -276,6 +277,18 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  var title = boxTitle.insert(new Q.UI.Text({ label: "Creditos", x: 0, y: 0, color: "white", family:"robo", size: 42}));
 	  var text = boxText.insert(new Q.UI.Text({ label: "Este videojuego ha sido desarrollado por \n Daniel Fernández Carnero, \nMarco González Pérez y \nSamuel Javier García Moreno.", x:0, y:0,color:"white", size:18}))
 	  var buttonBack = boxBack.insert(new Q.UI.Button({ label: "Volver", font:"400 18px robo", h:30, w:80, x: 10, y: 10, scale: 1, fill: "#C97FE5", border: 1, shadow: 2, shadowColor: "#ffffff" }));
+
+	  Q.input.keyboardControls({
+			ENTER: "start"
+		});
+
+	  Q.input.on("start",this, function(){
+	  	if (creditos) {
+	  		creditos = false;
+	    	Q.clearStages();
+	    	Q.stageScene('mainTitle');
+	  	}
+	  });
 
 	  buttonBack.on("click",function() {
 	    Q.clearStages();
@@ -304,7 +317,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				this.p.generado++;
 				this.p.currentTime = 0;
 				var numAleatorio = Math.floor(Math.random() * (2 - 0)) + 0;
-				console.log(numAleatorio)
 				if (this.p.tipoEnemigo == "Gusano" && numAleatorio)
 					this.p.stage.insert(new Q.Gusano({x:this.p.estanteria.x,y:this.p.estanteria.y}));
 				else if (this.p.tipoEnemigo == "Gusano" && !numAleatorio)
@@ -390,9 +402,9 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 					this.play("walk");
 				else if((Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo)
 					this.play(this.p.disparo + this.p.direccion);
-				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo) 
+				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && !this.p.disparo)
 					this.play("still");
-				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo) 
+				else if(!(Q.inputs['left'] || Q.inputs['right'] || Q.inputs['up'] || Q.inputs['down']) && this.p.disparo)
 					this.play(this.p.disparo + this.p.direccion + "Still");
 
 				if(Q.inputs['left'])
@@ -494,7 +506,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				this.p.vy= 20;
 			if(this.p.vy == 0 && !this.p.comePlanta)
 				this.p.vy= 20;
-		
+
 
 		},
 	});
@@ -620,7 +632,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 					Q.audio.play('muerte_bicho.mp3',{ loop: false });
 					if (collision.obj.p.comePlanta) {
 						Q.state.dec("insectos",1);
-						console.log("pasa");
 					}
 					collision.obj.destroy();
 					this.destroy();
@@ -672,9 +683,9 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	Q.Sprite.extend("Planta",{
 		init: function(p) {
 			this._super(p, {
-				sheet: "Plant", 
-				x: 272, 
-				y: 475, 
+				sheet: "Plant",
+				x: 272,
+				y: 475,
 				vidaFin: 350,
 				vida: 100,
 				timeT: 0.2,
@@ -713,7 +724,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				Q.state.set("end",1);
 				this.p.vida = 50;
 				if(Q.state.get("currentLevel")< 4){// El 4 es el último nivel implementado, tras el se gana el juego
-					console.log(Q.state.get("currentLevel"));
 					Q.stageScene('nextLevel',1, { label: "Next level!" });
 				}
 				else
@@ -742,10 +752,13 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  var label = box.insert(new Q.UI.Text({x:10, y: -10 - buttonPlay.p.h,  label: stage.options.label }));
 
 	  buttonPlay.on("click",function() {
+	    seleccionado = null;
 	    Q.clearStages();
+	    Q.stageScene('HUD',1);
 	    Q.stageScene('level1');
 	  });
 	  buttonMenu.on("click",function() {
+	    seleccionado = null;
 	    Q.clearStages();
 	    Q.stageScene('mainTitle');
 	  });
@@ -826,10 +839,8 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	                                        label: stage.options.label }));
 	  button.on("click",function() {
 	    Q.clearStages();
-	    console.log("nivel actual: " +  Q.state.get("currentLevel"));
 	    Q.state.inc("currentLevel",1);
 			var nextLevel = "level" + Q.state.get("currentLevel");
-			console.log("siguente nivel: " + nextLevel);
 			Q.stageScene('HUD',1);
 	    Q.stageScene(nextLevel);
 	  });
@@ -842,11 +853,8 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  	if(!yaPulsado){
 	  		yaPulsado = true;
 		    Q.clearStages();
-		    console.log("nivel actual: " +  Q.state.get("currentLevel"));
 		    Q.state.inc("currentLevel",1);
 				var nextLevel = "level" + Q.state.get("currentLevel");
-				console.log("siguente nivel: " + nextLevel);
-				console.log(nextLevel);
 				Q.stageScene('HUD',1);
 		    Q.stageScene(nextLevel);
 	  	}
@@ -924,7 +932,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 						this.p.vx = 0;
 						this.p.comePlanta = true;
 						this.del('aiBounce');
-						console.log("pasa inc");
 						Q.state.inc("insectos",1);
 					}
 				}
