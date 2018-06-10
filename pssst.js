@@ -169,7 +169,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:275.5}));
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:377.5,sheet:"Josefino"}));
 		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:479.5,sheet:"Avispa"}));
-		/*var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.l_4}));
+		var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.l_4}));
 		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec:2, estanteria: enemiesPos.l_4}));
 		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "AvispaBertoldo", frec: 15, estanteria: enemiesPos.l_3}));
 		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 26, estanteria: enemiesPos.l_2}));
@@ -177,7 +177,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var spawner5 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 10, estanteria: enemiesPos.r_4}));
 		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMax: 5, tipoEnemigo: "AvispaBertoldo", frec: 20, estanteria: enemiesPos.r_3}));
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
-		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 7, estanteria: enemiesPos.r_1}));*/
+		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 7, estanteria: enemiesPos.r_1}));
 
 		//var GusanoAzul = stage.insert(new Q.Gusano({x:50,y:50}));
 		//var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
@@ -219,7 +219,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  		seleccionado = null;
 		    Q.clearStages();
 		    Q.stageScene('HUD',1);
-		    Q.stageScene("level4");
+		    Q.stageScene("level1");
 	  	}
 	  	else if(seleccionado == "creditos"){
 	  		seleccionado = null;
@@ -791,7 +791,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		},
 
 		step: function(dt) {
-			//console.log("VIDA:   "+this.p.vida);
+			console.log("Insectos comiendo planta: "+ Q.state.get("insectos"));
 			this.p.time-=dt;
 			if (Q.state.get("end") == 0 && Q.state.get("insectos") == 0 && this.p.time < 0 && !Q.state.get("regaderaCogida")) {
 				this.p.vida++;
