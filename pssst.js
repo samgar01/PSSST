@@ -169,7 +169,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:275.5}));
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:377.5,sheet:"Josefino"}));
 		var sprayAvispa = stage.insert(new Q.Spray({x:53, y:479.5,sheet:"Avispa"}));
-		var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.l_4}));
+		/*var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.l_4}));
 		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec:2, estanteria: enemiesPos.l_4}));
 		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "AvispaBertoldo", frec: 15, estanteria: enemiesPos.l_3}));
 		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 26, estanteria: enemiesPos.l_2}));
@@ -177,7 +177,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		var spawner5 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 10, estanteria: enemiesPos.r_4}));
 		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMax: 5, tipoEnemigo: "AvispaBertoldo", frec: 20, estanteria: enemiesPos.r_3}));
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
-		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 7, estanteria: enemiesPos.r_1}));
+		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 7, estanteria: enemiesPos.r_1}));*/
 
 		//var GusanoAzul = stage.insert(new Q.Gusano({x:50,y:50}));
 		//var GusanoVerde = stage.insert(new Q.Gusano({x:494,y:50,sprite:"GusanoVerde",sheet:"GusanoVerdeRight"}));
@@ -187,8 +187,6 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		//var avispa = stage.insert(new Q.AvispaBertoldo({x:150, y:77, sprite:"Avispa-Bertoldo", sheet:"AvispaMoradaLeft"}))
 
 		Q.state.set("end",0);
-
-		Q.state.set("currentLevel",1);
 
 		Q.state.set("insectos",0);
 
@@ -221,7 +219,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	  		seleccionado = null;
 		    Q.clearStages();
 		    Q.stageScene('HUD',1);
-		    Q.stageScene("level1");
+		    Q.stageScene("level4");
 	  	}
 	  	else if(seleccionado == "creditos"){
 	  		seleccionado = null;
@@ -841,19 +839,86 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 
 	/*---------------------------------FIN DEL JUEGO-----------------------------------*/
 	Q.scene('endGame',function(stage) {
+		var seleccionado = "play";
 	  var box = stage.insert(new Q.UI.Container({
 	    x: Q.width/2, y: Q.height/2, fill: "rgba(255,255,255,0.5)"
 	  }));
 
-	  var button = box.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
-	                                           label: "Play Again" }));
-	  var label = box.insert(new Q.UI.Text({x:10, y: -10 - button.p.h,
-	                                        label: stage.options.label }));
-	  button.on("click",function() {
+	  var buttonPlay = box.insert(new Q.UI.Button({label: "Play Again", font:"400 24px robo", h:50, w:200, x: 10, y: 10, scale: 1.5, fill: "#C97FE5", border: 1, shadow: 10, shadowColor: "#000000" }));
+	  var buttonMenu = box.insert(new Q.UI.Button({label: "Menu",font:"400 24px robo", h:50, w:140, x: 10, y: 100, scale: 1.5, fill: "#7F03AD", border: 1, shadow: 0, shadowColor: "#000000" }));
+	  var label = box.insert(new Q.UI.Text({x:10, y: -10 - buttonPlay.p.h,  label: stage.options.label }));
+
+	  buttonPlay.on("click",function() {
+	    Q.clearStages();
+	    Q.stageScene('level1');
+	  });
+	  buttonMenu.on("click",function() {
 	    Q.clearStages();
 	    Q.stageScene('mainTitle');
 	  });
-	  box.fit(20);
+
+	  Q.input.keyboardControls({
+			ENTER: "start"
+		});
+
+	  Q.input.on("start",this, function(){
+	    if(seleccionado == "play"){
+	  		seleccionado = null;
+		    Q.clearStages();
+		    Q.stageScene('HUD',1);
+		    Q.stageScene("level1");
+	  	}
+	  	else if(seleccionado == "menu"){
+	  		seleccionado = null;
+	  		Q.clearStages();
+	  		Q.stageScene('mainTitle');
+	  	}
+ 		});
+		Q.input.on("up",this, function(){
+  	//console.log(seleccionado);
+	  	if (seleccionado != null) {
+	  		if(seleccionado == "play"){
+		  		buttonPlay.p.shadow = 0;
+		  		buttonPlay.p.fill = "#7F03AD";
+
+		  		buttonMenu.p.shadow = 10;
+		  		buttonMenu.p.fill = "#C97FE5";
+
+		  		seleccionado = "menu";
+		  	}
+		  	else if(seleccionado == "menu"){
+		  		buttonMenu.p.shadow = 0;
+		  		buttonMenu.p.fill = "#7F03AD";
+
+		  		buttonPlay.p.shadow = 10;
+		  		buttonPlay.p.fill = "#C97FE5";
+
+		  		seleccionado = "play"
+		  	}
+			}
+	  });
+
+  	Q.input.on("down",this, function(){
+	    if(seleccionado == "play"){
+	  		buttonPlay.p.shadow = 0;
+	  		buttonPlay.p.fill = "#7F03AD";
+
+	  		buttonMenu.p.shadow = 10;
+	  		buttonMenu.p.fill = "#C97FE5";
+
+	  		seleccionado = "menu";
+	  	}
+	  	else if(seleccionado == "menu"){
+	  		buttonMenu.p.shadow = 0;
+	  		buttonMenu.p.fill = "#7F03AD";
+
+	  		buttonPlay.p.shadow = 10;
+	  		buttonPlay.p.fill = "#C97FE5";
+
+	  		seleccionado = "play"
+	  	}
+	  });
+	  box.fit(60);
 	});
 
 /*---------------------------------SIGUIENTE NIVEL-----------------------------------*/
@@ -862,8 +927,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	    x: Q.width/2, y: Q.height/2, fill: "rgba(255,255,255,0.5)"
 	  }));
 
-	  var button = box.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
-	                                           label: "Next level" }));
+	  var button = box.insert(new Q.UI.Button({ x: 0, y: 0, label: "Next level",  font:"400 24px robo", fill: "#C97FE5"}));
 	  var label = box.insert(new Q.UI.Text({x:10, y: -10 - button.p.h,
 	                                        label: stage.options.label }));
 	  button.on("click",function() {
@@ -871,9 +935,22 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	    Q.state.inc("currentLevel",1);
 			var nextLevel = "level" + Q.state.get("currentLevel");
 			console.log(nextLevel);
-		Q.stageScene('HUD',1);
+			Q.stageScene('HUD',1);
 	    Q.stageScene(nextLevel);
 	  });
+
+	  Q.input.keyboardControls({
+			ENTER: "start"
+		});
+
+	  Q.input.on("start",this, function(){
+	    Q.clearStages();
+	    Q.state.inc("currentLevel",1);
+			var nextLevel = "level" + Q.state.get("currentLevel");
+			console.log(nextLevel);
+			Q.stageScene('HUD',1);
+	    Q.stageScene(nextLevel);
+ 		});
 	  box.fit(20);
 	});
 
@@ -883,14 +960,20 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	    x: Q.width/2, y: Q.height/2, fill: "rgba(255,255,255,0.5)"
 	  }));
 
-	  var button = box.insert(new Q.UI.Button({ x: 0, y: 0, fill: "#CCCCCC",
-	                                           label: "Play again" }));
+	  var button = box.insert(new Q.UI.Button({ x: 0, y: 0, label: "Menu",  font:"400 24px robo", fill: "#C97FE5" }));
 	  var label = box.insert(new Q.UI.Text({x:10, y: -10 - button.p.h,
 	                                        label: stage.options.label }));
 	  button.on("click",function() {
 	    Q.clearStages();
 	    Q.stageScene('mainTitle');
 	  });
+	  Q.input.keyboardControls({
+			ENTER: "start"
+		});
+		Q.input.on("start",this, function(){
+			Q.clearStages();
+	    Q.stageScene('mainTitle');
+		});
 	  box.fit(20);
 	});
 
