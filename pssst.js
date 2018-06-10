@@ -131,14 +131,14 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 		Q.stageTMX("level.tmx",stage);
 		var manolo = stage.insert(new Q.Manolo({stage:stage}));
 		var spawner0 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "Regadera", frec:15, estanteria: enemiesPos.l_4}));
-		var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec:25, estanteria: enemiesPos.l_4}));
+	  var spawner1 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec:25, estanteria: enemiesPos.l_4}));
 		var spawner2 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 10, estanteria: enemiesPos.l_3}));
 		var spawner3 = stage.insert(new Q.Spawner({stage:stage, numMax: 5, tipoEnemigo: "JosefinoRamiro", frec: 26, estanteria: enemiesPos.l_2}));
 		var spawner4 = stage.insert(new Q.Spawner({stage:stage, numMax: 3, tipoEnemigo: "JosefinoRamiro", frec: 18, estanteria: enemiesPos.l_1}));
 		var spawner5 = stage.insert(new Q.Spawner({stage:stage, numMax: 2, tipoEnemigo: "JosefinoRamiro", frec: 10, estanteria: enemiesPos.r_4}));
 		var spawner6 = stage.insert(new Q.Spawner({stage:stage, numMax: 3, tipoEnemigo: "JosefinoRamiro", frec: 3, estanteria: enemiesPos.r_3}));
 		var spawner7 = stage.insert(new Q.Spawner({stage:stage, numMax: 1, tipoEnemigo: "JosefinoRamiro", frec: 2, estanteria: enemiesPos.r_2}));
-		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 4, tipoEnemigo: "JosefinoRamiro", frec: 7, estanteria: enemiesPos.r_1}));
+		var spawner8 = stage.insert(new Q.Spawner({stage:stage, numMax: 20, tipoEnemigo: "JosefinoRamiro", frec: 5, estanteria: enemiesPos.r_1}));
 		var planta = stage.insert(new Q.Planta({scale:0.3,sheet:"Plant"}));
 		var sprayGusanos = stage.insert(new Q.Spray({x:53, y:275.5}));
 		var sprayJR = stage.insert(new Q.Spray({x:53, y:377.5,sheet:"Josefino"}));
@@ -528,14 +528,15 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	Q.Sprite.extend("Gusano", {
 		init: function(p) {
 			this._super(p, {
-				sheet: "GusanoAzulRight",
-				sprite: "GusanoAzul",
+				sheet:"GusanoVerdeRight",
+				sprite: "GusanoVerde",
 				frame: 0,
 				gravity: 0,
 				vx: 100,
 				vy: -20,
 				tipo: "Gusano",
 				planta: null,
+				poderComerPlanta: true,
 				type: Q.SPRITE_ENEMY,
 				comePlanta: false
 			});
@@ -603,13 +604,14 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 	Q.Sprite.extend("AvispaBertoldo", {
 		init: function(p) {
 			this._super(p, {
-				sheet: "AvispaAmarillaLeft",
-				sprite: "AvispaBertoldoAmarilla",
+				sheet: "AvispaMoradaLeft",
+				sprite: "AvispaBertoldoMorada",
 				frame: 0,
 				gravity: 0,
 				vx: 100,
 				vy: 0,
 				tipo: "Avispa",
+				poderComerPlanta: true,
 				planta: null,
 				type: Q.SPRITE_ENEMY,
 				comePlanta: false/*,
@@ -648,8 +650,8 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 
 
 	Q.animations('AvispaBertoldoMorada', {
-		moveL: { frames: [0,1], rate: 1/4, loop: true, flip:"x"},
-		moveR: { frames: [2,3], rate: 1/4, loop: true, flip:"x"}
+		moveR: { frames: [0,1], rate: 1/4, loop: true, flip:"x"},
+		moveL: { frames: [2,3], rate: 1/4, loop: true, flip:"x"}
 	});
 
 
@@ -669,6 +671,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 				tipo: "Josefino",
 				planta: null,
 				type: Q.SPRITE_ENEMY,
+				poderComerPlanta: true,
 				comePlanta: false
 			});
 
@@ -730,6 +733,7 @@ var Q = window.Q = Quintus({ audioSupported: ['mp3','ogg'] })
 					Q.audio.play('muerte_bicho.mp3',{ loop: false });
 					if (collision.obj.p.comePlanta) {
 						Q.state.dec("insectos",1);
+						console.log("pasa");
 					}
 					collision.obj.destroy();
 					this.destroy();
@@ -1015,20 +1019,21 @@ Q.component("defaultEnemy",{
 
 		//this.entity.on("destroy", "destroyEnemy");
 	},
-
 	extend:{
 		collision: function(collision) {
+			console.log(this);
 			if(collision.obj.isA("Manolo") && Q.state.get("end")==0) {
 				collision.obj.trigger("destroyManolo");
 			}
-
-			else if(collision.obj.isA("Planta")) {
+			else if(collision.obj.isA("Planta") && this.p.poderComerPlanta) {
+				this.p.poderComerPlanta = false;
 				if (Q.state.get("end") == 0){
 					this.p.planta = collision.obj;
 					this.p.vy = 0;
 					this.p.vx = 0;
 					this.p.comePlanta = true;
 					this.del('aiBounce');
+					console.log("pasa inc");
 					Q.state.inc("insectos",1);
 				}
 			}
