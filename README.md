@@ -47,7 +47,7 @@ Avispas: insectos con esta apariencia de color amarillo y morado.
 
 ## II. Diseño de la implementación
 
-![alt text](https://github.com/danfer09/PSSST/blob/master/images/Captura.PNG)
+![alt text](https://github.com/danfer09/PSSST/blob/master/images/maintitle.png)
 
 
 
